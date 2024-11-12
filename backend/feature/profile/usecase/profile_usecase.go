@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"scps-backend/feature"
 	profileRepo "scps-backend/feature/profile/domain/repository"
 )
 
@@ -15,6 +16,7 @@ type ProfileResult struct {
 }
 
 type ProfileUsecase interface {
+	CreateProfile(c context.Context, user *ProfileParams) *ProfileResult
 	GetProfile(c context.Context, data *ProfileParams) *ProfileResult
 	GetInformationCard(c context.Context, data *ProfileParams) *ProfileResult
 }
@@ -23,6 +25,8 @@ type profileUsecase struct {
 	repo       profileRepo.ProfileRepository
 	collection string
 }
+
+// SearchIfEamilExiste implements ProfileUsecase.
 
 func NewProfileUsecase(repo profileRepo.ProfileRepository, collection string) ProfileUsecase {
 	return &profileUsecase{
@@ -42,6 +46,15 @@ func (p *profileUsecase) GetProfile(c context.Context, data *ProfileParams) *Pro
 
 func (p *profileUsecase) GetInformationCard(c context.Context, data *ProfileParams) *ProfileResult {
 	profileResult, err := p.repo.GetInformationCard(c, data.Data.(string))
+	if err != nil {
+		return &ProfileResult{Err: err}
+	}
+	return &ProfileResult{Data: profileResult}
+}
+
+// CreateProfile implements ProfileUsecase.
+func (p *profileUsecase) CreateProfile(c context.Context, user *ProfileParams) *ProfileResult {
+	profileResult, err := p.repo.CreateProfile(c, user.Data.(*feature.User))
 	if err != nil {
 		return &ProfileResult{Err: err}
 	}

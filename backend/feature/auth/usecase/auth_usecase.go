@@ -29,6 +29,9 @@ func (l *AuthParams) validator() error {
 		}
 	case *entities.SetPwd:
 		params := l.Data.(*entities.SetPwd)
+		if params.Email == "" {
+			return fmt.Errorf("email cannot be empty")
+		}
 		if params.Pwd1 == "" {
 			return fmt.Errorf("password 1 est vide")
 		}
@@ -49,6 +52,7 @@ type AuthUsecase interface {
 	//AUTH FUNCTIONS
 	Login(c context.Context, data *AuthParams) *AuthResult
 	SetPassword(c context.Context, data *AuthParams) *AuthResult
+	SearchIfEamilExiste(c context.Context, data *AuthParams) *AuthResult
 }
 
 type authUsecase struct {
@@ -80,9 +84,18 @@ func (u *authUsecase) SetPassword(c context.Context, data *AuthParams) *AuthResu
 	if err := data.validator(); err != nil {
 		return &AuthResult{Err: err}
 	}
-	result, err := u.repo.SetPassword(c, data.Data.(*entities.SetPwd).Pwd1)
+	result, err := u.repo.SetPassword(c, data.Data.(*entities.SetPwd).Pwd1, data.Data.(*entities.SetPwd).Email)
 	if err != nil {
 		return &AuthResult{Err: err}
 	}
 	return &AuthResult{Data: result}
+}
+
+func (p *authUsecase) SearchIfEamilExiste(c context.Context, email *AuthParams) *AuthResult {
+	data := email.Data.(*entities.SetEmail)
+	profileResult, err := p.repo.SearchIfEamilExiste(c, data.Email)
+	if err != nil {
+		return &AuthResult{Err: err}
+	}
+	return &AuthResult{Data: profileResult}
 }

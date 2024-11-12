@@ -1,8 +1,10 @@
 package router
 
 import (
+	"scps-backend/api/controller/middleware"
 	"scps-backend/api/router/private"
 	"scps-backend/api/router/public"
+	"scps-backend/pkg"
 
 	"scps-backend/pkg/database"
 
@@ -23,19 +25,26 @@ func Setup(db database.Database, gin *gin.Engine) {
 	// All Public APIs
 	public.NewPingRouter(db, publicRouter)
 	public.NewLoginRouter(db, publicRouter)
-	public.NewRecieveEmailRouter(publicRouter)
+	public.NewRecieveEmailRouter(db, publicRouter)
 	public.NewRecieveOTPRouter(publicRouter)
 	public.NewForgetPwdRouter(db, publicRouter)
 
 	userRouter := gin.Group("/profile")
 
-	//Middleware to verify AccessToken
-	// userRouter.Use(middleware.JwtAuthMiddleware(
-	// 	pkg.GET_ROOT_SERVER_SEETING().SECRET_KEY,
-	// 	"User"))
+	// Middleware to verify AccessToken
+	userRouter.Use(middleware.JwtAuthMiddleware(
+		pkg.GET_ROOT_SERVER_SEETING().SECRET_KEY,
+		"USER"))
 
 	//Profle API
 	private.NewGetProfileRouter(db, userRouter)
-	private.NewGetInformationsCardRouter(db, userRouter)
+
+	superuserRouter := gin.Group("/profile/super-user")
+	// Middleware to verify AccessToken
+	userRouter.Use(middleware.JwtAuthMiddleware(
+		pkg.GET_ROOT_SERVER_SEETING().SECRET_KEY,
+		"SUPER-USER"))
+	private.NewGetProfileRouter(db, superuserRouter)
+	private.NewGetInformationsCardRouter(db, superuserRouter)
 
 }

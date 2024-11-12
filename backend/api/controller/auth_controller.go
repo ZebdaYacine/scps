@@ -123,9 +123,19 @@ func (ic *AuthController) SetEmailRequest(c *gin.Context) {
 		return
 	}
 	log.Println(SetEmailParms)
+	authParams := &usecase.AuthParams{}
+	authParams.Data = &SetEmailParms
+	resulat := ic.AuthUsecase.SearchIfEamilExiste(c, authParams)
+	if err := resulat.Err; err != nil {
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+	user := resulat.Data.(*feature.User)
 	sendOTP(feature.User{
 		Email: SetEmailParms.Email,
-		Name:  "ZEBDA",
+		Name:  user.Name,
 	}, c, "OTP")
 	c.JSON(http.StatusOK, model.SuccessResponse{
 		Message: "SETTING EMAIL SUCCESSFULY",
@@ -150,6 +160,7 @@ func (ic *AuthController) ReciveOTPRequest(c *gin.Context) {
 		})
 		return
 	}
+
 }
 
 func (ic *AuthController) ForgetPwdRequest(c *gin.Context) {

@@ -8,20 +8,17 @@ import (
 type User struct {
 	Id         string  `json:"id" bson:"id"`
 	InsurdNbr  string  `json:"insurdNbr" bson:"insurdNbr"`
-	Nbr        int     `json:"nbr" bson:"nbr"`
 	Name       string  `json:"name" bson:"name"`
 	Email      string  `json:"email" bson:"email"`
 	Password   string  `json:"password" bson:"password"`
 	Phone      string  `json:"phone" bson:"phone"`
 	Permission string  `json:"permission" bson:"permission"`
-	Son        []Son   `json:"son" bson:"son"`
-	Visit      []Visit `json:"visit" bson:"visit"`
-	Role       int     `json:"role,omitempty" bson:"role,omitempty"`
+	Son        []Son   `json:"son,omitempty" bson:"son,omitempty"`
+	Visit      []Visit `json:"visit,omitempty" bson:"visit,omitempty"`
 }
 
 type Son struct {
 	InsurdNbr string  `json:"insurdNbr" bson:"insurdNbr"`
-	Nbr       int     `json:"nbr" bson:"nbr"`
 	Status    string  `json:"status" bson:"status"`
 	Name      string  `json:"name" bson:"name"`
 	Visit     []Visit `json:"visit" bson:"visit"`

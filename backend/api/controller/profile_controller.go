@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"scps-backend/api/controller/model"
 	"scps-backend/core"
+	"scps-backend/feature"
 
 	"scps-backend/feature/profile/domain/entities"
 	"scps-backend/feature/profile/usecase"
@@ -55,6 +56,29 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 	log.Println(resulat)
 	c.JSON(http.StatusOK, model.SuccessResponse{
 		Message: "INFORMATION PROFILE SUCCESSFULY",
-		Data:    informationsParms,
+		Data:    resulat.Data,
+	})
+}
+
+func (ic *ProfileController) CreateProfileRequest(c *gin.Context) {
+	log.Println("************************ CREATE PROFILE REQUEST ************************")
+	var user feature.User
+	if !core.IsDataRequestSupported(&user, c) {
+		return
+	}
+	log.Println(user)
+	profileParams := &usecase.ProfileParams{}
+	profileParams.Data = user
+	resulat := ic.ProfileUsecase.CreateProfile(c, profileParams)
+	if err := resulat.Err; err != nil {
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+	log.Println(resulat)
+	c.JSON(http.StatusOK, model.SuccessResponse{
+		Message: "INFORMATION PROFILE SUCCESSFULY",
+		Data:    resulat,
 	})
 }

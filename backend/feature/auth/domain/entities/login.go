@@ -18,6 +18,7 @@ type ReciveOTP struct {
 }
 
 type SetPwd struct {
-	Pwd1 string `json:"pwd1"`
-	Pwd2 string `json:"pwd2"`
+	Email string `json:"email"`
+	Pwd1  string `json:"pwd1"`
+	Pwd2  string `json:"pwd2"`
 }

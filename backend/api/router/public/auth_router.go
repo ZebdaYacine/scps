@@ -19,9 +19,11 @@ func NewLoginRouter(db database.Database, group *gin.RouterGroup) {
 	group.POST("login", ic.LoginRequest)
 }
 
-func NewRecieveEmailRouter(group *gin.RouterGroup) {
+func NewRecieveEmailRouter(db database.Database, group *gin.RouterGroup) {
+	ir := repository.NewAuthRepository(db)
+	uc := usecase.NewAuthUsecase(ir, core.USER)
 	ic := &controller.AuthController{
-		AuthUsecase: nil, // usecase for insured operations
+		AuthUsecase: uc, // usecase for insured operations
 	}
 	group.POST("set-email", ic.SetEmailRequest)
 }
