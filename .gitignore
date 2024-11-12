@@ -1,0 +1,44 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+
+# Output of 'go build'
+/bin/
+/dist/
+
+# Vendor folder (only if you are using vendoring)
+vendor/
+
+# IDEs and Editors
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+# Dart/Flutter related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+pubspec.lock
+
+# IDEs and Editors
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Other OS specific
+Thumbs.db
