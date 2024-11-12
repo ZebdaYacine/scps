@@ -1,0 +1,35 @@
+import 'package:app/core/entities/user_data.dart';
+import 'package:app/core/errors/exception.dart';
+import 'package:app/core/errors/failure.dart';
+import 'package:app/feature/profile/data/datasources/profile_remote_data_source.dart';
+import 'package:app/feature/profile/domain/repository/profile_repository.dart';
+import 'package:dartz/dartz.dart';
+
+class PofileRepositoryImpl implements ProfileRepository {
+  final ProfileRemoteDataSource remoteDataSource;
+  PofileRepositoryImpl(this.remoteDataSource);
+
+  @override
+  Future<Either<Failure, UserData>> getProfile({required String token}) async {
+    try {
+      final user = await remoteDataSource.getProfile(
+        token: token,
+      );
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserData>> getInformationsCard(
+      {required String token, required String idsecurity}) async {
+    try {
+      final user = await remoteDataSource.getInformationCard(
+          token: token, idsecurity: idsecurity);
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+}

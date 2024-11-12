@@ -1,0 +1,46 @@
+name: app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  go_router: ^14.2.7
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
+  logger: ^1.1.0
+  either_dart: ^1.0.0
+  dio: ^5.5.0+1
+  dartz: ^0.10.1
+  google_fonts: ^6.2.1
+  flutter_screenutil: ^5.9.3
+  intl: ^0.17.0
+  dropdown_button2: ^2.3.9
+  pluto_grid: ^5.4.9
+  pin_code_fields: ^8.0.0
+  qr_flutter: ^4.1.0
+  encrypt: ^5.0.0
+  pointycastle: ^3.0.1
+  universal_io: ^2.0.0
+  qrcode_reader_web: ^1.1.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_secure_storage: ^9.2.2
+  emoji_data: ^1.0.0
+
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/sch.jpg
+    - assets/cnas.png
+    - assets/cnr.png
+    - assets/pharmacie.png
