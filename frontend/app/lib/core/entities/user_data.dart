@@ -6,7 +6,10 @@ class UserData {
   final String name;
   final String email;
   final String phone;
-  final List<SonData> sons;
+  final bool request;
+  final String status;
+
+  // final List<SonData> sons;
   final List<VisitData> visits;
 
   UserData(
@@ -14,7 +17,9 @@ class UserData {
       required this.name,
       required this.email,
       required this.phone,
-      required this.sons,
+      required this.request,
+      required this.status,
+      // required this.sons,
       required this.visits});
 
   factory UserData.fromJson(Map<String, dynamic> map) {
@@ -23,10 +28,12 @@ class UserData {
       name: map['name'] ?? '',
       insurdNbr: map['insurdNbr'] ?? '',
       phone: map['phone'] ?? '',
-      sons: (map['son'] as List?)
-              ?.map((son) => SonData.fromJson(son as Map<String, dynamic>))
-              .toList() ??
-          [],
+      request: map['request'] ?? false,
+      status: map['status'] ?? "",
+      // sons: (map['son'] as List?)
+      //         ?.map((son) => SonData.fromJson(son as Map<String, dynamic>))
+      //         .toList() ??
+      //     [],
       visits: (map['visit'] as List?)
               ?.map(
                   (visit) => VisitData.fromJson(visit as Map<String, dynamic>))
@@ -41,7 +48,9 @@ class UserData {
       'email': email,
       'insurdNbr': insurdNbr,
       'phone': phone,
-      'son': sons.map((son) => son.toJson()).toList(),
+      "request": request,
+      "status": status,
+      // 'son': sons.map((son) => son.toJson()).toList(),
       'visit': visits.map((visits) => visits.toJson()).toList(),
     };
   }
@@ -51,15 +60,19 @@ class UserData {
     String? name,
     String? email,
     String? phone,
-    List<SonData>? sons,
+    bool? request,
+    String? status,
+    List<VisitData>? visits,
   }) {
     return UserData(
       insurdNbr: insurdNbr ?? this.insurdNbr,
       name: name ?? this.name,
       email: email ?? this.email,
       phone: phone ?? this.phone,
-      sons: sons ?? this.sons,
-      visits: visits,
+      status: status ?? this.status,
+      request: request ?? this.request,
+      // sons: sons ?? this.sons,
+      visits: visits ?? this.visits,
     );
   }
 }

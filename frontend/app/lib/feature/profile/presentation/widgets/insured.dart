@@ -12,7 +12,7 @@ class Insured extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(5),
       child: Table(
         border: TableBorder.all(),
         children: [
@@ -21,7 +21,7 @@ class Insured extends StatelessWidget {
             children: [
               TableCell(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Text(
                     "N assure",
                     style: TextStyle(
@@ -33,7 +33,7 @@ class Insured extends StatelessWidget {
               ),
               TableCell(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Text(
                     "Full Name",
                     style: TextStyle(
@@ -45,7 +45,7 @@ class Insured extends StatelessWidget {
               ),
               TableCell(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Text(
                     "Status",
                     style: TextStyle(
@@ -57,7 +57,7 @@ class Insured extends StatelessWidget {
               ),
               TableCell(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Text(
                     "Usages",
                     style: TextStyle(
@@ -87,7 +87,7 @@ class Insured extends StatelessWidget {
               children: [
                 TableCell(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(
                       entry.insurdNbr,
                       style: TextStyle(
@@ -100,7 +100,7 @@ class Insured extends StatelessWidget {
                 ),
                 TableCell(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(
                       entry.name,
                       style: TextStyle(
@@ -113,7 +113,7 @@ class Insured extends StatelessWidget {
                 ),
                 TableCell(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(
                       entry.status,
                       style: TextStyle(
@@ -126,7 +126,7 @@ class Insured extends StatelessWidget {
                 ),
                 TableCell(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(
                       entry.name,
                       style: TextStyle(

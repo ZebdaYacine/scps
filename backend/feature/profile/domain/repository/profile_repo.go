@@ -91,7 +91,10 @@ func (r *profileRepository) GetProfile(c context.Context, userId string) (*featu
 		Name:       result["name"].(string),
 		Phone:      result["phone"].(string),
 		Email:      result["email"].(string),
+		Request:    result["request"].(bool),
+		Status:     result["status"].(string),
 	}
+	log.Println(user)
 	return &user, nil
 }
 
@@ -105,24 +108,24 @@ func (r *profileRepository) GetInformationCard(c context.Context, securityId str
 		return nil, err
 	}
 
-	var sons []feature.Son
-	for _, sonItem := range result["son"].(bson.A) {
-		sonMap := sonItem.(primitive.M)
-		sons = append(sons, feature.Son{
-			Name:      sonMap["name"].(string),
-			InsurdNbr: sonMap["insurdNbr"].(string),
-			Status:    sonMap["status"].(string),
-			Visit:     convertObject(result["visit"].(primitive.A)),
-		})
-	}
+	// var sons []feature.Son
+	// for _, sonItem := range result["son"].(bson.A) {
+	// 	sonMap := sonItem.(primitive.M)
+	// 	sons = append(sons, feature.Son{
+	// 		Name:      sonMap["name"].(string),
+	// 		InsurdNbr: sonMap["insurdNbr"].(string),
+	// 		Status:    sonMap["status"].(string),
+	// 		Visit:     convertObject(result["visit"].(primitive.A)),
+	// 	})
+	// }
 	user := feature.User{
 		InsurdNbr:  result["insurdNbr"].(string),
 		Permission: result["permission"].(string),
 		Name:       result["name"].(string),
 		Phone:      result["phone"].(string),
 		Email:      result["email"].(string),
-		Son:        sons,
-		Visit:      convertObject(result["visit"]),
+		// Son:        sons,
+		Visit: convertObject(result["visit"]),
 	}
 	return &user, nil
 }

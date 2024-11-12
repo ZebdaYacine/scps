@@ -32,7 +32,7 @@ class _UserState extends State<User> {
         Card(
           elevation: 4,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(10),
           ),
           color: Colors.white,
           shadowColor: Colors.grey.shade300,
@@ -67,9 +67,7 @@ class _UserState extends State<User> {
         AuthGradientButton(
           buttonText: 'Consulter vos ayant droits',
           onClick: () {
-            setState(() {
-              logger.d(widget.securityService.decryptData(widget.cipherText1));
-            });
+            logger.d(widget.securityService.decryptData(widget.cipherText1));
             showDialog(
               context: context,
               builder: (context) {

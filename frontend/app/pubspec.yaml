@@ -27,6 +27,8 @@ dependencies:
   pointycastle: ^3.0.1
   universal_io: ^2.0.0
   qrcode_reader_web: ^1.1.1
+  file_picker: ^8.1.4
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -34,6 +36,7 @@ dev_dependencies:
   flutter_secure_storage: ^9.2.2
   emoji_data: ^1.0.0
 
+ 
 
 
 flutter:

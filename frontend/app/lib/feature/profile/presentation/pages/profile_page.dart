@@ -38,18 +38,15 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppPallete.gradient1,
         title: const Text(
-          'E-chiffa',
+          'E-CHIFFA',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
-            color: AppPallete.gradient1,
-          ),
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
+        centerTitle: true,
       ),
-      body: const Center(
-        child: kIsWeb ? ProfileWebPage() : ProfileMobilePage(),
-      ),
+      body: kIsWeb ? const ProfileWebPage() : const ProfileMobilePage(),
     );
   }
 }
