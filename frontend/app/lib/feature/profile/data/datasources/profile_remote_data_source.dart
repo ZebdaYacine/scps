@@ -9,6 +9,7 @@ Logger logger = Logger();
 abstract interface class ProfileRemoteDataSource {
   Future<UserData> getProfile({
     required String token,
+    required String agant,
   });
   Future<UserData> getInformationCard({
     required String token,
@@ -19,10 +20,11 @@ abstract interface class ProfileRemoteDataSource {
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   ProfileRemoteDataSourceImpl();
   @override
-  Future<UserData> getProfile({required String token}) async {
+  Future<UserData> getProfile(
+      {required String token, required String agant}) async {
     try {
       final response = await Dio().get(
-        "${Secret.URL_API}/profile/get-profile",
+        "${Secret.URL_API}/${agant}/get-profile",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

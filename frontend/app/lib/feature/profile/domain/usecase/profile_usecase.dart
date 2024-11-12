@@ -13,6 +13,7 @@ class ProfileUsecase {
   Future<Either<Failure, UserData>> getProfile(UserProfileParams params) async {
     return await profileRepository.getProfile(
       token: params.token,
+      agant: params.agant,
     );
   }
 
@@ -27,9 +28,11 @@ class ProfileUsecase {
 
 class UserProfileParams {
   final String token;
+  final String agant;
 
   UserProfileParams({
     required this.token,
+    required this.agant,
   });
 }
 

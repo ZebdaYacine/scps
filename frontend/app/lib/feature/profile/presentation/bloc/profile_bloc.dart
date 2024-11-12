@@ -21,7 +21,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onGetProfile(GetProfileEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     final result = await _profileUsecase.getProfile(
-      UserProfileParams(token: event.token),
+      UserProfileParams(
+        token: event.token,
+        agant: event.agant,
+      ),
     );
     result.fold(
       (l) async {

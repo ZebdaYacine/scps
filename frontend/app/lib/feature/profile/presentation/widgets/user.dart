@@ -1,3 +1,4 @@
+import 'package:app/core/state/auth/auth_bloc.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/feature/profile/presentation/widgets/information_card.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +25,10 @@ class User extends StatefulWidget {
 }
 
 class _UserState extends State<User> {
-  Map<String, dynamic> test = {};
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(test.toString()),
         Card(
           elevation: 4,
           shape: RoundedRectangleBorder(
@@ -70,7 +68,7 @@ class _UserState extends State<User> {
           buttonText: 'Consulter vos ayant droits',
           onClick: () {
             setState(() {
-              test = widget.securityService.decryptData(widget.cipherText1);
+              logger.d(widget.securityService.decryptData(widget.cipherText1));
             });
             showDialog(
               context: context,

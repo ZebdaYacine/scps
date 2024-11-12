@@ -8,6 +8,8 @@ class TokenCubit extends Cubit<String> {
   }
 
   void setToken(String token) {
-    emit(token);
+    if (token.isNotEmpty) {
+      emit(token);
+    }
   }
 }

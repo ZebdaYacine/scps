@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:app/core/const/common.dart';
 import 'package:app/core/extension/extension.dart';
+import 'package:app/core/theme/app_pallete.dart';
 import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
+import 'package:app/feature/auth/presentaion/pages/login_page.dart';
+import 'package:app/feature/auth/presentaion/pages/send_otp_page.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -50,6 +53,24 @@ class _ResetPwdPageState extends State<ResetPwdPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppPallete.gradient1,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(
+              context,
+              MaterialPageRoute(builder: (context) => const SendOtpPage()),
+            );
+          },
+        ),
+        title: const Text(
+          'E-CHIFFA',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: BlocConsumer<AuthBloc, AuthState>(

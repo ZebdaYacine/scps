@@ -3,11 +3,13 @@
 import 'package:app/core/const/common.dart';
 import 'package:app/core/extension/extension.dart';
 import 'package:app/core/state/email/set_email_bloc.dart';
+import 'package:app/core/theme/app_pallete.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
+import 'package:app/feature/auth/presentaion/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +39,24 @@ class _SendEmailPageState extends State<SendEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppPallete.gradient1,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+          },
+        ),
+        title: const Text(
+          'E-CHIFFA',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: BlocConsumer<SetEmailOTPBloc, SetEmailOTPState>(

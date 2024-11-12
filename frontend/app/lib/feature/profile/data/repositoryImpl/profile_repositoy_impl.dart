@@ -11,9 +11,13 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, UserData>> getProfile({required String token}) async {
+  Future<Either<Failure, UserData>> getProfile(
+      {required String token, required String agant}) async {
     try {
-      final user = await remoteDataSource.getProfile(token: token);
+      final user = await remoteDataSource.getProfile(
+        token: token,
+        agant: agant,
+      );
       return right(user);
     } on ServerException catch (e) {
       return left(Failure(e.message));

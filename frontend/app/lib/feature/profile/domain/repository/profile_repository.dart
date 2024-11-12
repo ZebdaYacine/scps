@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 abstract interface class ProfileRepository {
   Future<Either<Failure, UserData>> getProfile({
     required String token,
+    required String agant,
   });
 
   Future<Either<Failure, UserData>> getInformationsCard({

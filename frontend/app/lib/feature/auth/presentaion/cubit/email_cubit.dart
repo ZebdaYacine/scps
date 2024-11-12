@@ -8,6 +8,8 @@ class EmailCubit extends Cubit<String> {
   }
 
   void setEmail(String email) {
-    emit(email);
+    if (email.isNotEmpty) {
+      emit(email);
+    }
   }
 }

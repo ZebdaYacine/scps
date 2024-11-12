@@ -8,6 +8,7 @@ import 'package:app/core/theme/app_pallete.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
+import 'package:app/feature/auth/presentaion/pages/send_email_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -58,6 +59,26 @@ class _SendOtpPageState extends State<SendOtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppPallete.gradient1,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SendEmailPage(),
+              ),
+            );
+          },
+        ),
+        title: const Text(
+          'E-CHIFFA',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
       body: BlocConsumer<SetEmailOTPBloc, SetEmailOTPState>(
         listener: (context, state) {
           if (state is SetEmailOTPResult) {

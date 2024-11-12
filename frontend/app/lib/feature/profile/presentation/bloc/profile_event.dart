@@ -5,9 +5,11 @@ sealed class ProfileEvent {}
 
 final class GetProfileEvent extends ProfileEvent {
   final String token;
+  final String agant;
 
   GetProfileEvent({
     required this.token,
+    required this.agant,
   });
 }
 
