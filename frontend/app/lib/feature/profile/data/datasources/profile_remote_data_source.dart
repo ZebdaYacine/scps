@@ -32,7 +32,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       if (response.data == null) {
         throw const ServerException('User is null!');
       }
-      logger.d(response.data["data"]);
       return UserData.fromJson(response.data["data"]);
     } catch (e) {
       throw ServerException(e.toString());
@@ -57,7 +56,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       if (response.data == null) {
         throw const ServerException('User is null!');
       }
-      logger.d(response.data["data"]);
       return UserData.fromJson(response.data["data"]);
     } catch (e) {
       throw ServerException(e.toString());

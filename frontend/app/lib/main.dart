@@ -59,7 +59,7 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(
           create: (context) => ProfileBloc(
             profileUsecase: ProfileUsecase(
-              profileRepository: PofileRepositoryImpl(
+              profileRepository: ProfileRepositoryImpl(
                 ProfileRemoteDataSourceImpl(),
               ),
             ),

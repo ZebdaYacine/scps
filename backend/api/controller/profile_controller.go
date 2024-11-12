@@ -44,7 +44,7 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 	}
 	log.Println(informationsParms)
 	profileParams := &usecase.ProfileParams{}
-	profileParams.Data = informationsParms
+	profileParams.Data = informationsParms.SecurityId
 	resulat := ic.ProfileUsecase.GetInformationCard(c, profileParams)
 	if err := resulat.Err; err != nil {
 		c.JSON(http.StatusBadRequest, model.ErrorResponse{
@@ -52,6 +52,7 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 		})
 		return
 	}
+	log.Println(resulat)
 	c.JSON(http.StatusOK, model.SuccessResponse{
 		Message: "INFORMATION PROFILE SUCCESSFULY",
 		Data:    informationsParms,

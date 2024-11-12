@@ -4,6 +4,7 @@ import 'package:app/core/entities/visit_data.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
+import 'package:app/core/widgets/loading_bar.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/cubit/used_cubit.dart';
@@ -61,16 +62,21 @@ class _PharmacyState extends State<Pharmacy> {
                 showSnackBar(context, "no data available");
               } else {
                 nameuserController.text = userData!.name;
+                nbruserController.text = userData!.phone;
               }
             } else if (state is ProfileFailure) {
               showSnackBar(context, state.error);
             }
           },
           builder: (context, state) {
+            if (state is ProfileLoading) {
+              const Loader();
+            }
             return Form(
               key: formKey,
               child: Column(
                 children: [
+                  Text(nameuserController.text),
                   Row(
                     children: [
                       Expanded(

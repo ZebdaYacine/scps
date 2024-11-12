@@ -5,16 +5,15 @@ import 'package:app/feature/profile/data/datasources/profile_remote_data_source.
 import 'package:app/feature/profile/domain/repository/profile_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class PofileRepositoryImpl implements ProfileRepository {
+class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileRemoteDataSource remoteDataSource;
-  PofileRepositoryImpl(this.remoteDataSource);
+
+  ProfileRepositoryImpl(this.remoteDataSource);
 
   @override
   Future<Either<Failure, UserData>> getProfile({required String token}) async {
     try {
-      final user = await remoteDataSource.getProfile(
-        token: token,
-      );
+      final user = await remoteDataSource.getProfile(token: token);
       return right(user);
     } on ServerException catch (e) {
       return left(Failure(e.message));
@@ -22,8 +21,10 @@ class PofileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, UserData>> getInformationsCard(
-      {required String token, required String idsecurity}) async {
+  Future<Either<Failure, UserData>> getInformationsCard({
+    required String token,
+    required String idsecurity,
+  }) async {
     try {
       final user = await remoteDataSource.getInformationCard(
           token: token, idsecurity: idsecurity);
