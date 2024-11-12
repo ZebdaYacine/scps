@@ -7,6 +7,7 @@ import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
+import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -44,6 +45,9 @@ class _SendEmailPageState extends State<SendEmailPage> {
                 if (!state.status) {
                   showSnackBar(context, "6-digit not found ");
                 } else {
+                  context
+                      .read<EmailCubit>()
+                      .setEmail(valueController.text.trim());
                   context.go(confirmOtp);
                 }
               }

@@ -19,33 +19,27 @@ final GoRouter router = GoRouter(
 
     //Auth routers
     GoRoute(
-      path: setemailPath,
+      path: setemail,
       builder: (BuildContext context, GoRouterState state) {
         return const SendEmailPage();
       },
     ),
     GoRoute(
-      path: setPwdPath,
+      path: setPwd,
       builder: (BuildContext context, GoRouterState state) {
         return const ResetPwdPage();
       },
     ),
     GoRoute(
-      path: confirmOtpPath,
+      path: confirmOtp,
       builder: (BuildContext context, GoRouterState state) {
         return const SendOtpPage();
-      },
-    ),
-    GoRoute(
-      path: setPwdPath,
-      builder: (BuildContext context, GoRouterState state) {
-        return const ResetPwdPage();
       },
     ),
 
     //Profile routers
     GoRoute(
-      path: profilePath,
+      path: profile,
       builder: (BuildContext context, GoRouterState state) {
         return const ProfilePage();
       },

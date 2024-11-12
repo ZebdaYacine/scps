@@ -17,6 +17,7 @@ abstract interface class AuthRemoteDataSource {
   });
 
   Future<SetPwdModel> forgetPwd({
+    required String email,
     required String pwd1,
     required String pwd2,
   });
@@ -32,7 +33,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }) async {
     try {
       final response = await Dio().post(
-        "${Secret.URL_API}$loginPath",
+        "${Secret.URL_API}$loginP",
         options: Options(headers: headers),
         data: {
           'email': email,
@@ -80,14 +81,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<SetPwdModel> forgetPwd({
+    required String email,
     required String pwd1,
     required String pwd2,
   }) async {
     try {
       final response = await Dio().post(
-        "${Secret.URL_API}$setPwdPath",
+        "${Secret.URL_API}$setPwd",
         options: Options(headers: headers),
         data: {
+          'email': email,
           'pwd1': pwd1,
           'pwd2': pwd2,
         },

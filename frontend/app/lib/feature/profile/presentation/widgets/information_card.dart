@@ -99,10 +99,12 @@ class InformationCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                informations.nbr > 0 ? "Active" : "Desactive",
+                                informations.visits[0].nbr > 0
+                                    ? "Active"
+                                    : "Desactive",
                                 style: TextStyle(
                                     fontSize: 16,
-                                    color: informations.nbr > 0
+                                    color: informations.visits[0].nbr > 0
                                         ? const Color.fromARGB(255, 9, 123, 13)
                                         : Colors.red,
                                     fontWeight: FontWeight.bold),

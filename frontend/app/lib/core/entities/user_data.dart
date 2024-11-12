@@ -4,7 +4,6 @@ import 'package:app/core/entities/visit_data.dart';
 class UserData {
   final String insurdNbr;
   final String name;
-  final int nbr;
   final String email;
   final String phone;
   final List<SonData> sons;
@@ -13,7 +12,6 @@ class UserData {
   UserData(
       {required this.insurdNbr,
       required this.name,
-      required this.nbr,
       required this.email,
       required this.phone,
       required this.sons,
@@ -25,7 +23,6 @@ class UserData {
       name: map['name'] ?? '',
       insurdNbr: map['insurdNbr'] ?? '',
       phone: map['phone'] ?? '',
-      nbr: map['nbr'] ?? 0,
       sons: (map['son'] as List?)
               ?.map((son) => SonData.fromJson(son as Map<String, dynamic>))
               .toList() ??
@@ -44,7 +41,6 @@ class UserData {
       'email': email,
       'insurdNbr': insurdNbr,
       'phone': phone,
-      'nbr': nbr,
       'son': sons.map((son) => son.toJson()).toList(),
       'visit': visits.map((visits) => visits.toJson()).toList(),
     };
@@ -60,7 +56,6 @@ class UserData {
     return UserData(
       insurdNbr: insurdNbr ?? this.insurdNbr,
       name: name ?? this.name,
-      nbr: nbr,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       sons: sons ?? this.sons,

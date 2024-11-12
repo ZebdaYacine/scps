@@ -44,7 +44,6 @@ func (s *profileRepository) CreateProfile(c context.Context, user *feature.User)
 		log.Printf("Failed to update survey: %v", err)
 		return nil, err
 	}
-	log.Println(user)
 	return user, nil
 }
 
@@ -125,7 +124,6 @@ func (r *profileRepository) GetInformationCard(c context.Context, securityId str
 		Son:        sons,
 		Visit:      convertObject(result["visit"]),
 	}
-	log.Println(user)
 	return &user, nil
 }
 

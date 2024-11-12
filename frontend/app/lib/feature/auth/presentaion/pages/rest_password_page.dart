@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/core/const/common.dart';
 import 'package:app/core/extension/extension.dart';
+import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -111,6 +112,8 @@ class _ResetPwdPageState extends State<ResetPwdPage> {
                               if (pwdController1.text == pwdController2.text) {
                                 BlocProvider.of<AuthBloc>(context).add(
                                   AuthForgetPwd(
+                                    email:
+                                        context.read<EmailCubit>().getEmail(),
                                     pwd1: pwdController1.text,
                                     pwd2: pwdController1.text,
                                   ),

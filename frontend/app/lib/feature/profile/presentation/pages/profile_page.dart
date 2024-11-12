@@ -75,13 +75,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       cipherText =
                           securityService.encryptData(userData!.toJson());
                       cipherText1 = cipherText;
-                      if (!kIsWeb) {
-                        if ((Platform.isAndroid || Platform.isIOS)) {
-                          cipherText =
-                              securityService.encryptData(userData!.toJson());
-                          cipherText1 = cipherText;
-                        }
-                      }
+                      // if (!kIsWeb) {
+                      //   if ((Platform.isAndroid || Platform.isIOS)) {
+                      //     cipherText =
+                      //         securityService.encryptData(userData!.toJson());
+                      //     cipherText1 = cipherText;
+                      //   }
+                      // }
+                      cipherText =
+                          securityService.encryptData(userData!.toJson());
+                      cipherText1 = cipherText;
                     } else {
                       showSnackBar(context, "no data available");
                     }
@@ -144,21 +147,27 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          if (kIsWeb)
-                            const Pharmacy()
-                          else if (Platform.isWindows ||
-                              Platform.isLinux ||
-                              Platform.isMacOS)
-                            const Worker()
-                          else if (Platform.isIOS || Platform.isAndroid)
-                            User(
-                              userData: userData,
-                              cipherText: cipherText,
-                              cipherText1: cipherText1,
-                              securityService: securityService,
-                            )
-                          else
-                            const Text("Not yet supported"),
+                          User(
+                            userData: userData,
+                            cipherText: cipherText,
+                            cipherText1: cipherText1,
+                            securityService: securityService,
+                          )
+                          // if (kIsWeb)
+                          //   const Pharmacy()
+                          // else if (Platform.isWindows ||
+                          //     Platform.isLinux ||
+                          //     Platform.isMacOS)
+                          //   const Worker()
+                          // else if (Platform.isIOS || Platform.isAndroid)
+                          //   User(
+                          //     userData: userData,
+                          //     cipherText: cipherText,
+                          //     cipherText1: cipherText1,
+                          //     securityService: securityService,
+                          //   )
+                          // else
+                          //   const Text("Not yet supported"),
                         ],
                       ),
                     ),

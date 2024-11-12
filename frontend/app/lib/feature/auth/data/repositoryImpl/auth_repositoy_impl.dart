@@ -42,9 +42,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, bool>> forgetPwd(
-      {required String pwd1, required String pwd2}) async {
+      {required String email,
+      required String pwd1,
+      required String pwd2}) async {
     try {
       final result = await remoteDataSource.forgetPwd(
+        email: email,
         pwd1: pwd1,
         pwd2: pwd2,
       );

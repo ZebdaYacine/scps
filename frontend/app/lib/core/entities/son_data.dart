@@ -4,14 +4,12 @@ class SonData {
   final String insurdNbr;
   final String name;
   final String status;
-  final int nbr;
   final List<VisitData> visits;
 
   SonData({
     required this.insurdNbr,
     required this.name,
     required this.status,
-    required this.nbr,
     required this.visits,
   });
 
@@ -20,7 +18,6 @@ class SonData {
       status: map['status'] ?? '',
       name: map['name'] ?? '',
       insurdNbr: map['insurdNbr'] ?? '',
-      nbr: map['nbr'] ?? '',
       visits: (map['visit'] as List?)
               ?.map(
                   (visit) => VisitData.fromJson(visit as Map<String, dynamic>))
@@ -34,7 +31,6 @@ class SonData {
       'status': status,
       'name': name,
       'insurdNbr': insurdNbr,
-      'nbr': nbr,
       'visit': visits.map((visits) => visits.toJson()).toList(),
     };
   }
@@ -50,7 +46,6 @@ class SonData {
       insurdNbr: insurdNbr ?? this.insurdNbr,
       name: name ?? this.name,
       status: status,
-      nbr: nbr,
       visits: son.visits,
     );
   }

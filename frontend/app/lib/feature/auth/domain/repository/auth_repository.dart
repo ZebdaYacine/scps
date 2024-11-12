@@ -14,6 +14,7 @@ abstract interface class AuthRepository {
   });
 
   Future<Either<Failure, bool>> forgetPwd({
+    required String email,
     required String pwd1,
     required String pwd2,
   });

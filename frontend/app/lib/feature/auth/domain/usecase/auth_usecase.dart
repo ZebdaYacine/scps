@@ -28,6 +28,7 @@ class AuthUsecase {
   Future<Either<Failure, bool>> forgetPassword(
       ForgetPasswordarams params) async {
     return await authRepository.forgetPwd(
+      email: params.email,
       pwd1: params.pwd1,
       pwd2: params.pwd2,
     );
@@ -43,10 +44,12 @@ class EmailOTPParams {
 }
 
 class ForgetPasswordarams {
+  final String email;
   final String pwd1;
   final String pwd2;
 
   ForgetPasswordarams({
+    required this.email,
     required this.pwd1,
     required this.pwd2,
   });

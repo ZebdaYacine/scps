@@ -66,6 +66,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     final result = await _authUsecase.forgetPassword(
       ForgetPasswordarams(
+        email: event.email,
         pwd1: event.pwd1,
         pwd2: event.pwd2,
       ),

@@ -153,7 +153,6 @@ class _PharmacyState extends State<Pharmacy> {
                                         insurdNbr: "ndsfklds",
                                         name: "yassine",
                                         status: "dfd",
-                                        nbr: 1,
                                         visits: [
                                           VisitData(nbr: 1, trimester: 1),
                                         ],
@@ -162,7 +161,6 @@ class _PharmacyState extends State<Pharmacy> {
                                         insurdNbr: "d",
                                         name: "d",
                                         status: "dfdd",
-                                        nbr: 1,
                                         visits: [
                                           VisitData(nbr: 1, trimester: 1),
                                         ],

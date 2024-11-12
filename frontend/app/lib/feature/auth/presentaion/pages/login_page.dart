@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                 showSnackBar(context, state.error);
               } else if (state is AuthSuccess) {
                 context.read<TokenCubit>().setToken(state.token);
-                context.go(profilePath);
+                context.go(profile);
               }
             },
             builder: (context, state) {

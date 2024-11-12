@@ -128,7 +128,7 @@ class Insured extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      entry.nbr.toString(),
+                      entry.name,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,

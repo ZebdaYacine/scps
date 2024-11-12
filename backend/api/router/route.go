@@ -21,30 +21,24 @@ func Setup(db database.Database, gin *gin.Engine) {
 	gin.Use(cors.New(config))
 
 	publicRouter := gin.Group("/")
-
-	// All Public APIs
 	public.NewPingRouter(db, publicRouter)
 	public.NewLoginRouter(db, publicRouter)
 	public.NewRecieveEmailRouter(db, publicRouter)
 	public.NewRecieveOTPRouter(publicRouter)
 	public.NewForgetPwdRouter(db, publicRouter)
 
-	userRouter := gin.Group("/profile")
-
-	// Middleware to verify AccessToken
+	// User-specific routes with middleware
+	userRouter := gin.Group("/user")
 	userRouter.Use(middleware.JwtAuthMiddleware(
 		pkg.GET_ROOT_SERVER_SEETING().SECRET_KEY,
 		"USER"))
-
-	//Profle API
 	private.NewGetProfileRouter(db, userRouter)
 
-	superuserRouter := gin.Group("/profile/super-user")
-	// Middleware to verify AccessToken
-	userRouter.Use(middleware.JwtAuthMiddleware(
+	// Superuser-specific routes with middleware
+	superuserRouter := gin.Group("/super-user")
+	superuserRouter.Use(middleware.JwtAuthMiddleware(
 		pkg.GET_ROOT_SERVER_SEETING().SECRET_KEY,
 		"SUPER-USER"))
-	private.NewGetProfileRouter(db, superuserRouter)
+	private.NewGetProfileSuRouter(db, superuserRouter)
 	private.NewGetInformationsCardRouter(db, superuserRouter)
-
 }

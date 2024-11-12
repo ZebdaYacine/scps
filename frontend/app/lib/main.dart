@@ -5,6 +5,7 @@ import 'package:app/core/theme/theme.dart';
 import 'package:app/feature/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:app/feature/auth/data/repositoryImpl/auth_repositoy_impl.dart';
 import 'package:app/feature/auth/domain/usecase/auth_usecase.dart';
+import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
 import 'package:app/feature/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:app/feature/profile/data/repositoryImpl/profile_repositoy_impl.dart';
 import 'package:app/feature/profile/domain/usecase/profile_usecase.dart';
@@ -34,6 +35,9 @@ class _MainAppState extends State<MainApp> {
       providers: [
         BlocProvider(
           create: (context) => UsedCubit(),
+        ),
+        BlocProvider(
+          create: (context) => EmailCubit(),
         ),
         BlocProvider(
           create: (context) => TokenCubit(),

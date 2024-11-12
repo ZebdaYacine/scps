@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func NewGetProfileSuRouter(db database.Database, group *gin.RouterGroup) {
+	ir := repository.NewProfileRepository(db)
+	uc := usecase.NewProfileUsecase(ir, "")
+	ic := &controller.ProfileController{
+		ProfileUsecase: uc,
+	}
+	group.GET("get-profile", ic.GetProfileRequest)
+}
 func NewGetProfileRouter(db database.Database, group *gin.RouterGroup) {
 	ir := repository.NewProfileRepository(db)
 	uc := usecase.NewProfileUsecase(ir, "")

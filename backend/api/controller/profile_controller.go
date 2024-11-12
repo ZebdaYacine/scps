@@ -30,7 +30,6 @@ func (ic *ProfileController) GetProfileRequest(c *gin.Context) {
 		})
 		return
 	}
-
 	c.JSON(http.StatusOK, model.SuccessResponse{
 		Message: "GET PROFILE SUCCESSFULY",
 		Data:    resulat.Data,
@@ -43,7 +42,6 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 	if !core.IsDataRequestSupported(&informationsParms, c) {
 		return
 	}
-	log.Println(informationsParms)
 	profileParams := &usecase.ProfileParams{}
 	profileParams.Data = informationsParms.SecurityId
 	resulat := ic.ProfileUsecase.GetInformationCard(c, profileParams)
@@ -53,7 +51,6 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 		})
 		return
 	}
-	log.Println(resulat)
 	c.JSON(http.StatusOK, model.SuccessResponse{
 		Message: "INFORMATION PROFILE SUCCESSFULY",
 		Data:    resulat.Data,
@@ -76,7 +73,6 @@ func (ic *ProfileController) CreateProfileRequest(c *gin.Context) {
 		})
 		return
 	}
-	log.Println(resulat)
 	c.JSON(http.StatusOK, model.SuccessResponse{
 		Message: "INFORMATION PROFILE SUCCESSFULY",
 		Data:    resulat,
