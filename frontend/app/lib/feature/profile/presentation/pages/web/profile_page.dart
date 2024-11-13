@@ -12,6 +12,8 @@ import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
+import 'package:app/feature/profile/presentation/widgets/damand_list.dart';
+import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
 import 'package:app/feature/profile/presentation/widgets/pharmacy.dart';
 import 'package:app/feature/profile/presentation/widgets/user.dart';
 import 'package:app/feature/profile/presentation/widgets/worker.dart';
@@ -85,49 +87,59 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          color: Colors.white,
-                          shadowColor: Colors.grey.shade300,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    const CircleAvatar(
-                                      radius: 35.0,
-                                      backgroundImage: NetworkImage(
-                                        'https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png',
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      userData?.name ?? "",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: context.isMobile ? 20 : 30,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                IconButton(
-                                  icon:
-                                      const Icon(Icons.logout_sharp, size: 30),
-                                  onPressed: () {
-                                    context.read<AuthBloc>().add(Authlogout());
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
+                        NavBarCard(
+                          userName: userData != null ? userData!.name : "Guest",
+                          callback: () {
+                            context.read<AuthBloc>().add(Authlogout());
+                          },
                         ),
                         const SizedBox(height: 20),
-                        const Pharmacy()
+                        //const Pharmacy()
+                        DemandList(
+                          demands: [
+                            UserData(
+                              email: "zed",
+                              insurdNbr: "",
+                              name: "Zed",
+                              phone: "0568185867",
+                              request: false,
+                              status: "rejected",
+                              link:
+                                  "files//data/user/0/com.example.app/cache/file_picker/1731489505732/Screenshot_2024-11-13-07-48-38-02_40deb401b9ffe8e1df2f1cc5ba480b12.jpg",
+                              visits: [],
+                            ),
+                            UserData(
+                              email: "zed",
+                              insurdNbr: "",
+                              name: "Zed",
+                              phone: "0568185867",
+                              request: false,
+                              status: "approved",
+                              link: "",
+                              visits: [],
+                            ),
+                            UserData(
+                              email: "zed",
+                              insurdNbr: "",
+                              name: "Zed",
+                              phone: "0568185867",
+                              request: false,
+                              status: "pending",
+                              link: "",
+                              visits: [],
+                            ),
+                            UserData(
+                              email: "zed",
+                              insurdNbr: "",
+                              name: "Zed",
+                              phone: "0568185867",
+                              request: false,
+                              status: "pending",
+                              link: "",
+                              visits: [],
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),

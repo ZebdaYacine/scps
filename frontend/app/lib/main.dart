@@ -41,9 +41,6 @@ class _MainAppState extends State<MainApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => UsedCubit(),
-        ),
-        BlocProvider(
           create: (context) => EmailCubit(),
         ),
         BlocProvider(
