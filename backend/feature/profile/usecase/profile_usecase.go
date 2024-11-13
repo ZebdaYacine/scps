@@ -19,6 +19,7 @@ type ProfileUsecase interface {
 	CreateProfile(c context.Context, user *ProfileParams) *ProfileResult
 	GetProfile(c context.Context, data *ProfileParams) *ProfileResult
 	GetInformationCard(c context.Context, data *ProfileParams) *ProfileResult
+	ReciveDemand(c context.Context, user *ProfileParams) *ProfileResult
 }
 
 type profileUsecase struct {
@@ -33,6 +34,18 @@ func NewProfileUsecase(repo profileRepo.ProfileRepository, collection string) Pr
 		repo:       repo,
 		collection: collection,
 	}
+}
+
+// ReciveDemand implements ProfileUsecase.
+func (p *profileUsecase) ReciveDemand(c context.Context, data *ProfileParams) *ProfileResult {
+	user := data.Data.(*feature.User)
+	user.Request = true
+	user.Status = "pending"
+	profileResult, err := p.repo.ReciveDemand(c, user)
+	if err != nil {
+		return &ProfileResult{Err: err}
+	}
+	return &ProfileResult{Data: profileResult}
 }
 
 // Login implements UserUsecase.

@@ -21,12 +21,44 @@ type ProfileRepository interface {
 	UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error)
 	GetProfile(c context.Context, userId string) (*feature.User, error)
 	GetInformationCard(c context.Context, userId string) (*feature.User, error)
+	ReciveDemand(c context.Context, user *feature.User) (*feature.User, error)
 }
 
 func NewProfileRepository(db database.Database) ProfileRepository {
 	return &profileRepository{
 		database: db,
 	}
+}
+
+func (s *profileRepository) ReciveDemand(c context.Context, user *feature.User) (*feature.User, error) {
+	collection := s.database.Collection("user")
+	id, err := primitive.ObjectIDFromHex(user.Id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	filterUpdate := bson.D{{Key: "_id", Value: id}}
+	update := bson.M{
+		"$set": bson.M{
+			"request":  user.Request,
+			"status":   user.Status,
+			"linkfile": user.LinkFile,
+		},
+	}
+	_, err = collection.UpdateOne(c, filterUpdate, update)
+	if err != nil {
+		log.Panic(err)
+		return nil, err
+	}
+	new_user := &feature.User{}
+	err = collection.FindOne(c, filterUpdate).Decode(new_user)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, fmt.Errorf("user not found")
+		}
+		return nil, err
+	}
+	println(new_user)
+	return new_user, nil
 }
 
 // CreateProfile implements ProfileRepository.
@@ -72,6 +104,7 @@ func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.Use
 	}
 	return new_user, nil
 }
+
 func (r *profileRepository) GetProfile(c context.Context, userId string) (*feature.User, error) {
 	var result bson.M // MongoDB result should be a bson.M (map)
 	id, err := primitive.ObjectIDFromHex(userId)
@@ -93,16 +126,20 @@ func (r *profileRepository) GetProfile(c context.Context, userId string) (*featu
 		Email:      result["email"].(string),
 		Request:    result["request"].(bool),
 		Status:     result["status"].(string),
+		Visit:      convertObject(result["visit"]),
 	}
-	log.Println(user)
 	return &user, nil
 }
 
-func (r *profileRepository) GetInformationCard(c context.Context, securityId string) (*feature.User, error) {
+func (r *profileRepository) GetInformationCard(c context.Context, userId string) (*feature.User, error) {
 	var result bson.M
-	filter := bson.D{{Key: "insurdNbr", Value: securityId}}
+	id, err := primitive.ObjectIDFromHex(userId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	filter := bson.D{{Key: "_id", Value: id}}
 	collection := r.database.Collection("user")
-	err := collection.FindOne(c, filter).Decode(&result)
+	err = collection.FindOne(c, filter).Decode(&result)
 	if err != nil {
 		log.Print(err)
 		return nil, err
@@ -125,7 +162,8 @@ func (r *profileRepository) GetInformationCard(c context.Context, securityId str
 		Phone:      result["phone"].(string),
 		Email:      result["email"].(string),
 		// Son:        sons,
-		Visit: convertObject(result["visit"]),
+		Visit:    convertObject(result["visit"]),
+		LinkFile: result["linkfile"].(string),
 	}
 	return &user, nil
 }

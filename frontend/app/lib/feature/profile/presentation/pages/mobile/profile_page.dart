@@ -13,16 +13,19 @@ import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
+import 'package:app/feature/profile/presentation/widgets/alert_card.dart';
 import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
 import 'package:app/feature/profile/presentation/widgets/pharmacy.dart';
 import 'package:app/feature/profile/presentation/widgets/upload_button_file.dart';
 import 'package:app/feature/profile/presentation/widgets/user.dart';
 import 'package:app/feature/profile/presentation/widgets/worker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 final logger = Logger();
 
@@ -61,11 +64,11 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
     await Future.delayed(const Duration(seconds: 1));
   }
 
-  String base64String = "No file selected";
   String message = "";
   bool showQRCode = true;
   bool showUploadFile = true;
   bool showMsg = true;
+  PlatformFile? pickedFile;
 
   // Function to pick file and convert it to base64
   Future<void> pickFileAndConvertToBase64() async {
@@ -75,10 +78,49 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
       List<int> fileBytes = await file.readAsBytes();
       String base64String = base64Encode(fileBytes);
       setState(() {
-        this.base64String = base64String;
+        pickedFile = result.files.first;
       });
       print("Base64 Encoded File: $base64String");
     }
+  }
+
+  void uploadFile() async {
+    if (pickedFile == null) {
+      showSnackBar(context, "Please select");
+      return;
+    }
+    try {
+      String path = 'files/${pickedFile!.path!}';
+      final file = File(pickedFile!.path!);
+      final ref = FirebaseStorage.instance.ref().child(path);
+      ref.putFile(file);
+      pickedFile = null;
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const AlertCard(
+                title: "Alert",
+                message: "your demand is uploaded successfully");
+          });
+      context.read<ProfileBloc>().add(
+            SendDemandEvent(
+              token: token,
+              link: path,
+            ),
+          );
+    } catch (e) {
+      showSnackBar(context, "error was happening");
+    }
+  }
+
+  void selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowedExtensions: ['jpg', 'png', 'pdf'],
+      type: FileType.custom,
+    );
+    setState(() {
+      pickedFile = result!.files.first;
+    });
   }
 
   @override
@@ -169,24 +211,15 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
                             ),
                             const SizedBox(height: 30),
                             if (showUploadFile)
-                              UploadButton(
+                              SelectButton(
                                 callback: () async {
-                                  FilePickerResult? result =
-                                      await FilePicker.platform.pickFiles(
-                                    allowedExtensions: ['jpg', 'png', 'pdf'],
-                                    type: FileType.custom,
-                                  );
-                                  if (result != null) {
-                                    setState(() {
-                                      base64String = result.files.single.name;
-                                    });
-                                  }
+                                  selectFile();
                                 },
                               ),
                             const SizedBox(height: 10),
                             if (showUploadFile)
                               Text(
-                                base64String,
+                                pickedFile != null ? pickedFile!.name : "",
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.blueGrey,
@@ -208,7 +241,9 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
                             if (showUploadFile)
                               AuthGradientButton(
                                 buttonText: 'envoyer votre demande',
-                                onClick: () {},
+                                onClick: () {
+                                  uploadFile();
+                                },
                               ),
                             const SizedBox(height: 10),
                             if (showQRCode)

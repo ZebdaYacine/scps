@@ -24,6 +24,23 @@ class ProfileUsecase {
       idsecurity: params.idsecurity,
     );
   }
+
+  Future<Either<Failure, UserData>> sendDemand(DemandParams params) async {
+    return await profileRepository.sendDemand(
+      token: params.token,
+      link: params.link,
+    );
+  }
+}
+
+class DemandParams {
+  final String token;
+  final String link;
+
+  DemandParams({
+    required this.token,
+    required this.link,
+  });
 }
 
 class UserProfileParams {

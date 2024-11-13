@@ -43,3 +43,12 @@ func NewCreateProfileRouter(db database.Database, group *gin.RouterGroup) {
 	}
 	group.POST("create-profile", ic.CreateProfileRequest)
 }
+
+func NewSendDemandRouter(db database.Database, group *gin.RouterGroup) {
+	ir := repository.NewProfileRepository(db)
+	uc := usecase.NewProfileUsecase(ir, "")
+	ic := &controller.ProfileController{
+		ProfileUsecase: uc,
+	}
+	group.POST("send-demand", ic.SendDemandRequest)
+}

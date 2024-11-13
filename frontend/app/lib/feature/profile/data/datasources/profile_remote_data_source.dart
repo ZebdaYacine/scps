@@ -11,6 +11,12 @@ abstract interface class ProfileRemoteDataSource {
     required String token,
     required String agant,
   });
+
+  Future<UserData> sendDemand({
+    required String token,
+    required String link,
+  });
+
   Future<UserData> getInformationCard({
     required String token,
     required String idsecurity,
@@ -53,6 +59,30 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         ),
         data: {
           'securityId': idsecurity,
+        },
+      );
+      if (response.data == null) {
+        throw const ServerException('User is null!');
+      }
+      return UserData.fromJson(response.data["data"]);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<UserData> sendDemand(
+      {required String token, required String link}) async {
+    try {
+      final response = await Dio().post(
+        "${Secret.URL_API}/user/send-demand",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+        data: {
+          'linkfile': link,
         },
       );
       if (response.data == null) {

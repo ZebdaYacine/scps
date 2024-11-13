@@ -136,20 +136,7 @@ class InformationCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // SizedBox(height: 2),
-                  // if (informations.sons.isEmpty)
-                  //   Text(
-                  //     "No son here",
-                  //     style: TextStyle(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.bold,
-                  //       color: Colors.blueGrey,
-                  //     ),
-                  //     textAlign: TextAlign.center,
-                  //   ),
-                  // Insured(
-                  //   insuredData: informations.sons,
-                  // ),
+                  
                 ],
               ),
             ),

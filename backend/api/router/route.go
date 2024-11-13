@@ -33,6 +33,7 @@ func Setup(db database.Database, gin *gin.Engine) {
 		pkg.GET_ROOT_SERVER_SEETING().SECRET_KEY,
 		"USER"))
 	private.NewGetProfileRouter(db, userRouter)
+	private.NewSendDemandRouter(db, userRouter)
 
 	// Superuser-specific routes with middleware
 	superuserRouter := gin.Group("/super-user")

@@ -14,9 +14,10 @@ type User struct {
 	Phone      string `json:"phone" bson:"phone"`
 	Permission string `json:"permission" bson:"permission"`
 	// Son        []Son   `json:"son,omitempty" bson:"son,omitempty"`
-	Visit   []Visit `json:"visit,omitempty" bson:"visit,omitempty"`
-	Request bool    `json:"request,omitempty" bson:"request,omitempty"`
-	Status  string  `json:"status,omitempty" bson:"status,omitempty"`
+	Visit    []Visit `json:"visit,omitempty" bson:"visit,omitempty"`
+	Request  bool    `json:"request,omitempty" bson:"request,omitempty"`
+	Status   string  `json:"status,omitempty" bson:"status,omitempty"`
+	LinkFile string  `json:"linkfile,omitempty" bson:"linkfile,omitempty"`
 }
 
 type Son struct {
@@ -33,5 +34,6 @@ type Visit struct {
 
 type Account interface {
 	User | entities.Login | entities.SetEmail |
-		entities.ReciveOTP | entities.SetPwd | profileEntities.InformationsCard
+		entities.ReciveOTP | entities.SetPwd |
+		profileEntities.InformationsCard | profileEntities.Link
 }

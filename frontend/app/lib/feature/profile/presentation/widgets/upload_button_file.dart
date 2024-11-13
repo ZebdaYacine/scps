@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class UploadButton extends StatelessWidget {
+class SelectButton extends StatelessWidget {
   final VoidCallback callback;
-  const UploadButton({super.key, required this.callback});
+  const SelectButton({super.key, required this.callback});
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
@@ -19,7 +19,7 @@ class UploadButton extends StatelessWidget {
         callback();
       },
       icon: const Icon(Icons.cloud_upload),
-      label: const Text('Upload File'),
+      label: const Text('Select File'),
     );
   }
 }

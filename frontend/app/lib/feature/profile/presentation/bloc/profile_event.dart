@@ -13,6 +13,16 @@ final class GetProfileEvent extends ProfileEvent {
   });
 }
 
+final class SendDemandEvent extends ProfileEvent {
+  final String token;
+  final String link;
+
+  SendDemandEvent({
+    required this.token,
+    required this.link,
+  });
+}
+
 final class GetInformationCardEvent extends ProfileEvent {
   final String token;
   final String idsecurity;

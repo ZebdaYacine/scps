@@ -15,7 +15,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       : _profileUsecase = profileUsecase,
         super(ProfileInitial()) {
     on<GetProfileEvent>(_onGetProfile);
+    on<SendDemandEvent>(_sendDemandEvent);
     on<GetInformationCardEvent>(_onGetInformationCardEvent);
+  }
+
+  void _sendDemandEvent(
+      SendDemandEvent event, Emitter<ProfileState> emit) async {
+    emit(ProfileLoading());
+    final result = await _profileUsecase.sendDemand(
+      DemandParams(
+        token: event.token,
+        link: event.link,
+      ),
+    );
+    result.fold(
+      (l) async {
+        emit(ProfileFailure(l.message));
+      },
+      (r) async {
+        emit(ProfileSuccess(r));
+      },
+    );
   }
 
   void _onGetProfile(GetProfileEvent event, Emitter<ProfileState> emit) async {

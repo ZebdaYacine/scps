@@ -12,12 +12,19 @@ import 'package:app/feature/profile/domain/usecase/profile_usecase.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/cubit/used_cubit.dart';
+import 'package:app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 

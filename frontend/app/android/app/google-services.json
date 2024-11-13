@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "937682686639",
+    "project_id": "e-chiffa-67701",
+    "storage_bucket": "e-chiffa-67701.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937682686639:android:413b051095a0546d0a3a5a",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATSedVsSWY_iF1JRSX4_9xY5TeShLqeSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

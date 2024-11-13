@@ -12,4 +12,9 @@ abstract interface class ProfileRepository {
     required String token,
     required String idsecurity,
   });
+
+  Future<Either<Failure, UserData>> sendDemand({
+    required String token,
+    required String link,
+  });
 }

@@ -36,6 +36,31 @@ func (ic *ProfileController) GetProfileRequest(c *gin.Context) {
 	})
 }
 
+func (ic *ProfileController) SendDemandRequest(c *gin.Context) {
+	log.Println("************************ SEND DEMAND REQUEST ************************")
+	var likn entities.Link
+	if !core.IsDataRequestSupported(&likn, c) {
+		return
+	}
+	userId := core.GetIdUser(c)
+	user := &feature.User{}
+	user.Id = userId
+	user.LinkFile = likn.LinkFile
+	profileParams := &usecase.ProfileParams{}
+	profileParams.Data = user
+	resulat := ic.ProfileUsecase.ReciveDemand(c, profileParams)
+	if err := resulat.Err; err != nil {
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, model.SuccessResponse{
+		Message: "DEMAND  RECORDED  SUCCESSFULY",
+		Data:    resulat.Data,
+	})
+}
+
 func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 	log.Println("************************ GET INFORMATIONS CARD REQUEST ************************")
 	var informationsParms entities.InformationsCard

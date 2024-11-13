@@ -8,7 +8,7 @@ class UserData {
   final String phone;
   final bool request;
   final String status;
-
+  final String link;
   // final List<SonData> sons;
   final List<VisitData> visits;
 
@@ -19,6 +19,7 @@ class UserData {
       required this.phone,
       required this.request,
       required this.status,
+      required this.link,
       // required this.sons,
       required this.visits});
 
@@ -30,6 +31,7 @@ class UserData {
       phone: map['phone'] ?? '',
       request: map['request'] ?? false,
       status: map['status'] ?? "",
+      link: map['link'] ?? "",
       // sons: (map['son'] as List?)
       //         ?.map((son) => SonData.fromJson(son as Map<String, dynamic>))
       //         .toList() ??
@@ -50,6 +52,7 @@ class UserData {
       'phone': phone,
       "request": request,
       "status": status,
+      "link": link,
       // 'son': sons.map((son) => son.toJson()).toList(),
       'visit': visits.map((visits) => visits.toJson()).toList(),
     };
@@ -62,6 +65,7 @@ class UserData {
     String? phone,
     bool? request,
     String? status,
+    String? link,
     List<VisitData>? visits,
   }) {
     return UserData(
@@ -71,6 +75,7 @@ class UserData {
       phone: phone ?? this.phone,
       status: status ?? this.status,
       request: request ?? this.request,
+      link: link ?? this.link,
       // sons: sons ?? this.sons,
       visits: visits ?? this.visits,
     );

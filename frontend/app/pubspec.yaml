@@ -28,6 +28,8 @@ dependencies:
   universal_io: ^2.0.0
   qrcode_reader_web: ^1.1.1
   file_picker: ^8.1.4
+  firebase_core: ^3.7.0
+  firebase_storage: ^12.3.5
   
 dev_dependencies:
   flutter_test:
