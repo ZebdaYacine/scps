@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_const_constructors, library_private_types_in_public_api
-import 'package:app/core/extension/extension.dart';
-import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/feature/profile/presentation/pages/web/profile_page.dart';
-import 'package:app/feature/profile/presentation/widgets/generated_button.dart';
+import 'package:app/feature/profile/presentation/widgets/action_btn.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -88,22 +86,23 @@ class _ProveCardState extends State<ProveCard> {
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              "Veuillez fournir une pièce justificative de votre adresse email ou votre numéro de carte d'identité.",
-              style: TextStyle(fontSize: 16),
-            ),
-            GeneratedBtn(
-              callback: () {},
-            ),
-            AuthField(
-              nameFiedl: "N'assurnce",
-              controller: nameuserController,
-              isPwdField: false,
-            ),
-            AuthGradientButton(
-              buttonText: 'Valider la demande',
-              onClick: () {},
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ActionBtn(
+                  callback: () {},
+                  color: const Color.fromARGB(255, 36, 141, 40),
+                  icon: Icons.file_download_done,
+                  title: "Accepter",
+                ),
+                ActionBtn(
+                  callback: () {},
+                  color: const Color.fromARGB(255, 228, 55, 43),
+                  icon: Icons.cancel,
+                  title: "Rejeter",
+                )
+              ],
+            )
           ],
         ),
       ),

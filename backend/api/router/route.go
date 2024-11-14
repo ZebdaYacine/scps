@@ -43,4 +43,6 @@ func Setup(db database.Database, gin *gin.Engine) {
 		"SUPER-USER"))
 	private.NewGetProfileSuRouter(db, superuserRouter)
 	private.NewGetInformationsCardRouter(db, superuserRouter)
+	private.NewGetAllDemandsRouter(db, superuserRouter)
+
 }

@@ -31,6 +31,21 @@ class ProfileUsecase {
       link: params.link,
     );
   }
+
+  Future<Either<Failure, List<UserData>>> getAllDemands(
+      GetDemandParams params) async {
+    return await profileRepository.getAllDemands(
+      token: params.token,
+    );
+  }
+}
+
+class GetDemandParams {
+  final String token;
+
+  GetDemandParams({
+    required this.token,
+  });
 }
 
 class DemandParams {

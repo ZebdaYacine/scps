@@ -81,3 +81,18 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 		Data:    resulat.Data,
 	})
 }
+
+func (ic *ProfileController) GetAllDemandRequest(c *gin.Context) {
+	log.Println("************************ GET ALL PENDING DEMNADS REQUEST ************************")
+	resulat := ic.ProfileUsecase.GetAllDemands(c)
+	if err := resulat.Err; err != nil {
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, model.SuccessResponse{
+		Message: "GET ALL PENDING DEMNADS SUCCESSFULY",
+		Data:    resulat.Data,
+	})
+}

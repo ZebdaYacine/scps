@@ -63,10 +63,9 @@ func (s *profileRepository) ReciveDemand(c context.Context, user *feature.User) 
 	return new_user, nil
 }
 func (s *profileRepository) GetAllDemand(c context.Context) ([]*feature.User, error) {
-	collection := s.database.Collection("user")
 
-	// Adjust filter to match a boolean value if needed
-	filter := bson.D{{Key: "request", Value: true}}
+	collection := s.database.Collection("user")
+	filter := bson.D{{Key: "request", Value: true}, {Key: "permission", Value: "USER"}}
 
 	cursor, err := collection.Find(c, filter)
 	if err != nil {
@@ -81,44 +80,19 @@ func (s *profileRepository) GetAllDemand(c context.Context) ([]*feature.User, er
 			log.Printf("failed to decode document: %v", err)
 			continue
 		}
-
-		status, ok := result["status"].(string)
-		if !ok || status != "accepted" {
-			continue
+		if result["status"].(string) != "accepted" {
+			user := feature.User{
+				Id:        result["_id"].(primitive.ObjectID).Hex(),
+				InsurdNbr: result["insurdNbr"].(string),
+				Name:      result["name"].(string),
+				Email:     result["email"].(string),
+				Status:    result["status"].(string),
+				LinkFile:  result["linkfile"].(string),
+			}
+			users = append(users, &user)
 		}
-
-		user := feature.User{
-			InsurdNbr:  safeString(result, "insurdNbr"),
-			Permission: safeString(result, "permission"),
-			Name:       safeString(result, "name"),
-			Email:      safeString(result, "email"),
-			Request:    safeBool(result, "request"),
-			Status:     status,
-			Visit:      convertObject(result["visit"]),
-		}
-		users = append(users, &user)
 	}
-
-	if err := cursor.Err(); err != nil {
-		return nil, fmt.Errorf("cursor error: %w", err)
-	}
-
 	return users, nil
-}
-
-// Helper functions to safely extract and cast values
-func safeString(m bson.M, key string) string {
-	if val, ok := m[key].(string); ok {
-		return val
-	}
-	return ""
-}
-
-func safeBool(m bson.M, key string) bool {
-	if val, ok := m[key].(bool); ok {
-		return val
-	}
-	return false
 }
 
 func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error) {

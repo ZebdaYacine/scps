@@ -11,5 +11,6 @@ const createAccount = "/create-account";
 const profile = "/profile";
 const startPoint = "/";
 const loginP = "/login";
+const pendingDemends = "/get-All-demands";
 
 const keyAuth = "token";

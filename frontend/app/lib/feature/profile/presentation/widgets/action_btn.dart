@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 
-class GeneratedBtn extends StatelessWidget {
+class ActionBtn extends StatelessWidget {
   final VoidCallback callback;
-  const GeneratedBtn({super.key, required this.callback});
+  final Color color;
+  final IconData icon;
+  final String title;
+
+  const ActionBtn({
+    super.key,
+    required this.callback,
+    required this.color,
+    required this.icon,
+    required this.title,
+  });
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.blue,
+        backgroundColor: color,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -18,8 +28,8 @@ class GeneratedBtn extends StatelessWidget {
       onPressed: () {
         callback();
       },
-      icon: const Icon(Icons.refresh),
-      label: const Text("Genere un code d'assurnce"),
+      icon: Icon(icon),
+      label: Text(title),
     );
   }
 }

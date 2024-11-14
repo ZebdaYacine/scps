@@ -36,6 +36,7 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
   UserData? userData;
   String cipherText = "";
   String cipherText1 = "";
+  List<UserData> demands = [];
 
   @override
   void initState() {
@@ -94,51 +95,32 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                           },
                         ),
                         const SizedBox(height: 20),
-                        //const Pharmacy()
-                        DemandList(
-                          demands: [
-                            UserData(
-                              email: "zed",
-                              insurdNbr: "",
-                              name: "Zed",
-                              phone: "0568185867",
-                              request: false,
-                              status: "rejected",
-                              link:
-                                  "files//data/user/0/com.example.app/cache/file_picker/1731531069014/Screenshot_20241113-100221.png",
-                              visits: [],
-                            ),
-                            UserData(
-                              email: "zed",
-                              insurdNbr: "",
-                              name: "Zed",
-                              phone: "0568185867",
-                              request: false,
-                              status: "approved",
-                              link: "",
-                              visits: [],
-                            ),
-                            UserData(
-                              email: "zed",
-                              insurdNbr: "",
-                              name: "Zed",
-                              phone: "0568185867",
-                              request: false,
-                              status: "pending",
-                              link: "",
-                              visits: [],
-                            ),
-                            UserData(
-                              email: "zed",
-                              insurdNbr: "",
-                              name: "Zed",
-                              phone: "0568185867",
-                              request: false,
-                              status: "pending",
-                              link: "",
-                              visits: [],
-                            ),
-                          ],
+                        BlocConsumer<ProfileBloc, ProfileState>(
+                          listener: (context, state) {
+                            if (state is GetDemendsFailure) {
+                              showSnackBar(context, state.error);
+                            }
+                            if (state is GetDemendsSuccess) {
+                              logger.d(state.userData);
+                              demands = state.userData;
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is ProfileLoading) {
+                              return const Loader();
+                            }
+                            if (demands.isEmpty) {
+                              return const SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: Text(
+                                    "No demands found",
+                                  ),
+                                ),
+                              );
+                            }
+                            return DemandList(demands: demands);
+                          },
                         )
                       ],
                     ),

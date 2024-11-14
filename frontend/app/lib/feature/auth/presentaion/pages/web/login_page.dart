@@ -83,7 +83,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
                       ),
                       const SizedBox(height: 20),
                       AuthField(
-                        nameFiedl: "Email",
+                        nameFiedl: "Code Post",
                         controller: usernameController,
                         isPwdField: false,
                       ),

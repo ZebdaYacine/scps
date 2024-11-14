@@ -128,8 +128,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         );
       }
       return EmailOTPModel.fromJson(response.data);
-    } catch (e) {
-      return EmailOTPModel(status: false);
+    } on DioException catch (e) {
+      int code = e.response!.statusCode!;
+      if (code >= 500 && code < 600) {
+        throw const ServerException('server offline or internal server error');
+      } else if (code != 200) {
+        throw const ServerException('Unexpected error');
+      }
+      throw ServerException(e.toString());
     }
   }
 
@@ -153,7 +159,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw const ServerException('User is null!');
       }
       return SetPwdModel.fromJson(response.data);
-    } catch (e) {
+    } on DioException catch (e) {
+      int code = e.response!.statusCode!;
+      if (code >= 500 && code < 600) {
+        throw const ServerException('server offline or internal server error');
+      } else if (code != 200) {
+        throw const ServerException('Unexpected error');
+      }
       throw ServerException(e.toString());
     }
   }

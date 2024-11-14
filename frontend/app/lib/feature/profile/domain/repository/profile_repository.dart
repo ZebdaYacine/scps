@@ -17,4 +17,8 @@ abstract interface class ProfileRepository {
     required String token,
     required String link,
   });
+
+  Future<Either<Failure, List<UserData>>> getAllDemands({
+    required String token,
+  });
 }
