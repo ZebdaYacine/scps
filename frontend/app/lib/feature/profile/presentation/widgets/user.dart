@@ -59,20 +59,29 @@ class _UserState extends State<User> {
                     size: Size(60, 60),
                   ),
                 ),
+                Text(
+                  widget.userData != null ? widget.userData!.insurdNbr : "",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),
         ),
         const SizedBox(height: 30),
         AuthGradientButton(
-          buttonText: 'Consulter vos ayant droits',
+          buttonText: 'Consulter les details',
           onClick: () {
             logger.d(widget.securityService.decryptData(widget.cipherText1));
             showDialog(
               context: context,
               builder: (context) {
                 return InformationCard(
-                  title: "Les ayant droits",
+                  title: "Details de la carte",
                   informations: widget.userData!,
                 );
               },

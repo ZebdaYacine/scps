@@ -15,10 +15,8 @@ import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/widgets/alert_card.dart';
 import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
-import 'package:app/feature/profile/presentation/widgets/pharmacy.dart';
 import 'package:app/feature/profile/presentation/widgets/upload_button_file.dart';
 import 'package:app/feature/profile/presentation/widgets/user.dart';
-import 'package:app/feature/profile/presentation/widgets/worker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +67,8 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
   bool showUploadFile = true;
   bool showMsg = true;
   PlatformFile? pickedFile;
+  Color? colorText;
+  String? msg;
 
   // Function to pick file and convert it to base64
   Future<void> pickFileAndConvertToBase64() async {
@@ -134,7 +134,7 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(5),
             child: BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthFailure) {
@@ -169,7 +169,19 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
                               showQRCode = false;
                               showMsg = true;
                               showUploadFile = false;
-                              message = "Votre demande ${userData!.status}";
+                              switch (userData!.status) {
+                                case "rejected":
+                                  message = "Votre demande a été refusée";
+                                  colorText =
+                                      const Color.fromARGB(255, 255, 49, 35);
+                                  break;
+                                case "pending":
+                                  colorText =
+                                      const Color.fromARGB(255, 255, 166, 32);
+                                  message =
+                                      "Votre demande est en cours de traitement";
+                                  break;
+                              }
                             });
                           }
                         } else {
@@ -198,65 +210,67 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
                     if (profileState is ProfileLoading) {
                       return const Loader();
                     }
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            NavBarCard(
-                              userName:
-                                  userData != null ? userData!.name : "Guest",
-                              callback: () {
-                                context.read<AuthBloc>().add(Authlogout());
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          NavBarCard(
+                            userName:
+                                userData != null ? userData!.name : "Guest",
+                            callback: () {
+                              context.read<AuthBloc>().add(Authlogout());
+                            },
+                          ),
+                          const SizedBox(height: 30),
+                          if (showUploadFile)
+                            SelectButton(
+                              callback: () async {
+                                selectFile();
                               },
                             ),
-                            const SizedBox(height: 30),
-                            if (showUploadFile)
-                              SelectButton(
-                                callback: () async {
-                                  selectFile();
-                                },
+                          const SizedBox(height: 10),
+                          if (showUploadFile)
+                            Text(
+                              pickedFile != null ? pickedFile!.name : "",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold,
                               ),
-                            const SizedBox(height: 10),
-                            if (showUploadFile)
-                              Text(
-                                pickedFile != null ? pickedFile!.name : "",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.blueGrey,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            const SizedBox(
-                              width: 50,
                             ),
-                            if (showMsg)
-                              Text(
+                          if (showMsg)
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: colorText,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
                                 message,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 16,
-                                  color: Colors.blueGrey,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            if (showUploadFile)
-                              AuthGradientButton(
-                                buttonText: 'envoyer votre demande',
-                                onClick: () {
-                                  uploadFile();
-                                },
-                              ),
-                            const SizedBox(height: 10),
-                            if (showQRCode)
-                              User(
-                                userData: userData,
-                                cipherText: cipherText,
-                                cipherText1: cipherText1,
-                                securityService: securityService,
-                              ),
-                          ],
-                        ),
+                            ),
+                          if (showUploadFile)
+                            AuthGradientButton(
+                              buttonText: 'envoyer votre demande',
+                              onClick: () {
+                                uploadFile();
+                              },
+                            ),
+                          if (showQRCode)
+                            User(
+                              userData: userData,
+                              cipherText: cipherText,
+                              cipherText1: cipherText1,
+                              securityService: securityService,
+                            ),
+                        ],
                       ),
                     );
                   },

@@ -3,6 +3,7 @@ import 'package:app/core/entities/user_data.dart';
 import 'package:app/core/entities/visit_data.dart';
 import 'package:app/core/extension/extension.dart';
 import 'package:app/feature/profile/presentation/widgets/insured.dart';
+import 'package:app/feature/profile/presentation/widgets/row_information.dart';
 import 'package:flutter/material.dart';
 
 class InformationCard extends StatelessWidget {
@@ -29,9 +30,17 @@ class InformationCard extends StatelessWidget {
   }
 
   bool getStatus(List<VisitData> list) {
-    List<VisitData> filteredVisits =
-        list.where((visit) => visit.trimester == getCurrentTrimester).toList();
+    List<VisitData> filteredVisits = list
+        .where((visit) => visit.trimester == getCurrentTrimester())
+        .toList();
     return filteredVisits.isEmpty || filteredVisits[0].nbr < 3;
+  }
+
+  int getNbr(List<VisitData> list) {
+    List<VisitData> filteredVisits = list
+        .where((visit) => visit.trimester == getCurrentTrimester())
+        .toList();
+    return filteredVisits.isNotEmpty ? filteredVisits[0].nbr : 0;
   }
 
   @override
@@ -71,72 +80,39 @@ class InformationCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            informations.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: "N'assurance : ",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 18, 18, 18),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: informations.insurdNbr,
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 18, 18, 18),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                getStatus(informations.visits)
-                                    ? "Active"
-                                    : "Desactive",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: getStatus(informations.visits)
-                                        ? const Color.fromARGB(255, 9, 123, 13)
-                                        : Colors.red,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RowInformation(
+                          title: "Le nom:",
+                          value: informations.name,
+                        ),
+                        RowInformation(
+                          title: "N'assurnce:",
+                          value: informations.insurdNbr,
+                        ),
+                        RowInformation(
+                          title: "status:",
+                          value: getStatus(informations.visits)
+                              ? "Active"
+                              : "Desactive",
+                          style2: TextStyle(
+                              fontSize: 16,
+                              color: getStatus(informations.visits)
+                                  ? const Color.fromARGB(255, 9, 123, 13)
+                                  : Colors.red,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        RowInformation(
+                          title: "Rest:",
+                          value: (3 - getNbr(informations.visits)).toString(),
+                        ),
+                      ],
                     ),
                   ),
-                  
                 ],
               ),
             ),

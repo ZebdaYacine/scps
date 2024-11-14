@@ -16,11 +16,14 @@ type profileRepository struct {
 	database database.Database
 }
 
+// GetAllDemand implements ProfileRepository.
+
 type ProfileRepository interface {
 	UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error)
 	GetProfile(c context.Context, userId string) (*feature.User, error)
 	GetInformationCard(c context.Context, userId string) (*feature.User, error)
 	ReciveDemand(c context.Context, user *feature.User) (*feature.User, error)
+	GetAllDemand(c context.Context) ([]*feature.User, error)
 }
 
 func NewProfileRepository(db database.Database) ProfileRepository {
@@ -59,6 +62,64 @@ func (s *profileRepository) ReciveDemand(c context.Context, user *feature.User) 
 	println(new_user)
 	return new_user, nil
 }
+func (s *profileRepository) GetAllDemand(c context.Context) ([]*feature.User, error) {
+	collection := s.database.Collection("user")
+
+	// Adjust filter to match a boolean value if needed
+	filter := bson.D{{Key: "request", Value: true}}
+
+	cursor, err := collection.Find(c, filter)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find documents: %w", err)
+	}
+	defer cursor.Close(c)
+
+	var users []*feature.User
+	for cursor.Next(c) {
+		var result bson.M
+		if err := cursor.Decode(&result); err != nil {
+			log.Printf("failed to decode document: %v", err)
+			continue
+		}
+
+		status, ok := result["status"].(string)
+		if !ok || status != "accepted" {
+			continue
+		}
+
+		user := feature.User{
+			InsurdNbr:  safeString(result, "insurdNbr"),
+			Permission: safeString(result, "permission"),
+			Name:       safeString(result, "name"),
+			Email:      safeString(result, "email"),
+			Request:    safeBool(result, "request"),
+			Status:     status,
+			Visit:      convertObject(result["visit"]),
+		}
+		users = append(users, &user)
+	}
+
+	if err := cursor.Err(); err != nil {
+		return nil, fmt.Errorf("cursor error: %w", err)
+	}
+
+	return users, nil
+}
+
+// Helper functions to safely extract and cast values
+func safeString(m bson.M, key string) string {
+	if val, ok := m[key].(string); ok {
+		return val
+	}
+	return ""
+}
+
+func safeBool(m bson.M, key string) bool {
+	if val, ok := m[key].(bool); ok {
+		return val
+	}
+	return false
+}
 
 func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error) {
 	collection := s.database.Collection("user")
@@ -87,7 +148,6 @@ func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.Use
 }
 
 func (r *profileRepository) GetProfile(c context.Context, userId string) (*feature.User, error) {
-	log.Println(userId)
 	var result bson.M
 	id, err := primitive.ObjectIDFromHex(userId)
 	if err != nil {
@@ -101,13 +161,18 @@ func (r *profileRepository) GetProfile(c context.Context, userId string) (*featu
 		return nil, err
 	}
 	user := feature.User{
-		InsurdNbr:  result["insurdNbr"].(string),
+		// InsurdNbr:  result["insurdNbr"].(string),
 		Permission: result["permission"].(string),
 		Name:       result["name"].(string),
 		Email:      result["email"].(string),
 		Request:    result["request"].(bool),
 		Status:     result["status"].(string),
 		Visit:      convertObject(result["visit"]),
+	}
+	if user.Permission == "USER" {
+		user.InsurdNbr = result["insurdNbr"].(string)
+	} else if user.Permission == "SUPER-USER" {
+		user.InsurdNbr = result["post"].(string)
 	}
 	return &user, nil
 }
