@@ -11,7 +11,7 @@ import 'package:app/core/theme/app_pallete.dart';
 import 'package:app/core/utils/security.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/loading_bar.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/pages/mobile/profile_page.dart';
 import 'package:app/feature/profile/presentation/pages/web/profile_page.dart';

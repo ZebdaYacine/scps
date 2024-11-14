@@ -1,8 +1,7 @@
 import 'package:app/core/entities/user_data.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/loading_bar.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
-import 'package:app/feature/profile/presentation/widgets/alert_card.dart';
+import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/widgets/prove.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,7 +86,7 @@ class _DemandListState extends State<DemandList> {
             return Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,7 +102,7 @@ class _DemandListState extends State<DemandList> {
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(
-                          Icons.more_vert_outlined, 
+                          Icons.more_vert_outlined,
                           size: 28.0,
                           color: Colors.black,
                         ),
@@ -129,7 +128,7 @@ class _DemandListState extends State<DemandList> {
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
                           title: Text(
-                            demand.name,
+                            "Nom : ${demand.name}",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
@@ -137,7 +136,7 @@ class _DemandListState extends State<DemandList> {
                             ),
                           ),
                           subtitle: Text(
-                            'Phone: ${demand.phone}',
+                            "Numéro d'assurance: ${demand.insurdNbr}",
                             style: const TextStyle(
                               fontSize: 14.0,
                               color: Colors.black54,

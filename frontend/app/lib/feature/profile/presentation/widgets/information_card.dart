@@ -2,7 +2,6 @@
 import 'package:app/core/entities/user_data.dart';
 import 'package:app/core/entities/visit_data.dart';
 import 'package:app/core/extension/extension.dart';
-import 'package:app/feature/profile/presentation/widgets/insured.dart';
 import 'package:app/feature/profile/presentation/widgets/row_information.dart';
 import 'package:flutter/material.dart';
 

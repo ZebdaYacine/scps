@@ -52,3 +52,12 @@ func NewGetAllDemandsRouter(db database.Database, group *gin.RouterGroup) {
 	}
 	group.GET("get-All-demands", ic.GetAllDemandRequest)
 }
+
+func NewUpdateDemandRouter(db database.Database, group *gin.RouterGroup) {
+	ir := repository.NewProfileRepository(db)
+	uc := usecase.NewProfileUsecase(ir, "")
+	ic := &controller.ProfileController{
+		ProfileUsecase: uc,
+	}
+	group.POST("update-demand", ic.UpdateDemandRequestt)
+}

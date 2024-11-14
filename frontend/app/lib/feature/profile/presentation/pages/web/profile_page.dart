@@ -10,7 +10,8 @@ import 'package:app/core/state/auth/auth_bloc.dart';
 import 'package:app/core/utils/security.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/loading_bar.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/demand/demand_bloc_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/widgets/damand_list.dart';
 import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
@@ -34,6 +35,7 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
   final formKey = GlobalKey<FormState>();
   late final SecurityService securityService;
   UserData? userData;
+  String token = "";
   String cipherText = "";
   String cipherText1 = "";
   List<UserData> demands = [];
@@ -57,10 +59,16 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
             if (state is AuthFailure) {
               context.go(startPoint);
             } else if (state is AuthSuccess) {
+              token = state.token;
               context.read<ProfileBloc>().add(
                     GetProfileEvent(
                       token: state.token,
                       agant: "super-user",
+                    ),
+                  );
+              context.read<DemandBloc>().add(
+                    GetAllPendingDemandsEvent(
+                      token: state.token,
                     ),
                   );
             } else if (state is LogoutSuccess) {
@@ -95,13 +103,12 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                           },
                         ),
                         const SizedBox(height: 20),
-                        BlocConsumer<ProfileBloc, ProfileState>(
+                        BlocConsumer<DemandBloc, DemandState>(
                           listener: (context, state) {
                             if (state is GetDemendsFailure) {
                               showSnackBar(context, state.error);
                             }
                             if (state is GetDemendsSuccess) {
-                              logger.d(state.userData);
                               demands = state.userData;
                             }
                           },
@@ -110,13 +117,19 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                               return const Loader();
                             }
                             if (demands.isEmpty) {
-                              return const SizedBox(
+                              return SizedBox(
                                 height: 100,
                                 child: Center(
-                                  child: Text(
-                                    "No demands found",
-                                  ),
-                                ),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          context.read<DemandBloc>().add(
+                                                GetAllPendingDemandsEvent(
+                                                  token: token,
+                                                ),
+                                              );
+                                        },
+                                        icon:
+                                            const Icon(Icons.refresh_rounded))),
                               );
                             }
                             return DemandList(demands: demands);

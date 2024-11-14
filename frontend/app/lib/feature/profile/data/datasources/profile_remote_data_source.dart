@@ -139,7 +139,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       if (response.data == null) {
         throw const ServerException('User is null!');
       }
-      logger.d(response.data["data"]);
       List<dynamic> dataList = response.data["data"];
       List<UserData> users =
           dataList.map((data) => UserData.fromJson(data)).toList();

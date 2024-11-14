@@ -36,5 +36,5 @@ type Account interface {
 	User | entities.Login | entities.SetEmail |
 		entities.ReciveOTP | entities.SetPwd |
 		profileEntities.InformationsCard | profileEntities.Link |
-		entities.Register
+		entities.Register | profileEntities.UpdateProfile
 }

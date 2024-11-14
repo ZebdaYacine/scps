@@ -11,7 +11,7 @@ import 'package:app/core/utils/security.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/widgets/alert_card.dart';
 import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:objectid/objectid.dart';
 
 final logger = Logger();
 
@@ -90,7 +91,7 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
       return;
     }
     try {
-      String path = 'files/${pickedFile!.path!}';
+      String path = 'files/${ObjectId().hexString}';
       final file = File(pickedFile!.path!);
       final ref = FirebaseStorage.instance.ref().child(path);
       ref.putFile(file);
@@ -115,8 +116,9 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
 
   void selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowedExtensions: ['jpg', 'png', 'pdf'],
+      allowedExtensions: ['jpg', 'png'],
       type: FileType.custom,
+      compressionQuality: 100,
     );
     setState(() {
       pickedFile = result!.files.first;

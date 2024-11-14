@@ -96,3 +96,24 @@ func (ic *ProfileController) GetAllDemandRequest(c *gin.Context) {
 		Data:    resulat.Data,
 	})
 }
+
+func (ic *ProfileController) UpdateDemandRequestt(c *gin.Context) {
+	log.Println("************************ UPDATE PROFILE REQUEST ************************")
+	var updateProfile entities.UpdateProfile
+	if !core.IsDataRequestSupported(&updateProfile, c) {
+		return
+	}
+	profileParams := &usecase.ProfileParams{}
+	profileParams.Data = updateProfile
+	resulat := ic.ProfileUsecase.UpdateDemand(c, profileParams)
+	if err := resulat.Err; err != nil {
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, model.SuccessResponse{
+		Message: "UPDATE PROFILE SUCCESSFULY",
+		Data:    resulat.Data,
+	})
+}

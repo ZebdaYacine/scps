@@ -19,7 +19,7 @@ type profileRepository struct {
 // GetAllDemand implements ProfileRepository.
 
 type ProfileRepository interface {
-	UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error)
+	UpdateDemand(c context.Context, user *feature.User) (*feature.User, error)
 	GetProfile(c context.Context, userId string) (*feature.User, error)
 	GetInformationCard(c context.Context, userId string) (*feature.User, error)
 	ReciveDemand(c context.Context, user *feature.User) (*feature.User, error)
@@ -95,7 +95,7 @@ func (s *profileRepository) GetAllDemand(c context.Context) ([]*feature.User, er
 	return users, nil
 }
 
-func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error) {
+func (s *profileRepository) UpdateDemand(c context.Context, user *feature.User) (*feature.User, error) {
 	collection := s.database.Collection("user")
 	id, err := primitive.ObjectIDFromHex(user.Id)
 	if err != nil {

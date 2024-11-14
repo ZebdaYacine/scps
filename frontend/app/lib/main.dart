@@ -9,7 +9,8 @@ import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
 import 'package:app/feature/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:app/feature/profile/data/repositoryImpl/profile_repositoy_impl.dart';
 import 'package:app/feature/profile/domain/usecase/profile_usecase.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/demand/demand_bloc_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/cubit/used_cubit.dart';
 import 'package:app/firebase_options.dart';
@@ -66,6 +67,15 @@ class _MainAppState extends State<MainApp> {
         ),
         BlocProvider(
           create: (context) => ProfileBloc(
+            profileUsecase: ProfileUsecase(
+              profileRepository: ProfileRepositoryImpl(
+                ProfileRemoteDataSourceImpl(),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => DemandBloc(
             profileUsecase: ProfileUsecase(
               profileRepository: ProfileRepositoryImpl(
                 ProfileRemoteDataSourceImpl(),

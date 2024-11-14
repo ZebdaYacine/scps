@@ -17,6 +17,7 @@ type ProfileResult struct {
 
 type ProfileUsecase interface {
 	GetProfile(c context.Context, data *ProfileParams) *ProfileResult
+	UpdateDemand(c context.Context, data *ProfileParams) *ProfileResult
 	GetInformationCard(c context.Context, data *ProfileParams) *ProfileResult
 	ReciveDemand(c context.Context, user *ProfileParams) *ProfileResult
 	GetAllDemands(c context.Context) *ProfileResult
@@ -50,6 +51,14 @@ func (p *profileUsecase) ReciveDemand(c context.Context, data *ProfileParams) *P
 	user.Request = true
 	user.Status = "pending"
 	profileResult, err := p.repo.ReciveDemand(c, user)
+	if err != nil {
+		return &ProfileResult{Err: err}
+	}
+	return &ProfileResult{Data: profileResult}
+}
+
+func (p *profileUsecase) UpdateDemand(c context.Context, data *ProfileParams) *ProfileResult {
+	profileResult, err := p.repo.UpdateDemand(c, data.Data.(*feature.User))
 	if err != nil {
 		return &ProfileResult{Err: err}
 	}

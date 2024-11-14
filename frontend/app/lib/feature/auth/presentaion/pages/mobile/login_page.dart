@@ -75,7 +75,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Caisse National de Retraités",
+                        "Platfrom E-CHIFFA",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: context.isMobile ? 23 : 30,

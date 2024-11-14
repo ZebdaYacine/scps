@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_const_constructors, library_private_types_in_public_api
-import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/feature/profile/presentation/pages/web/profile_page.dart';
 import 'package:app/feature/profile/presentation/widgets/action_btn.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -90,10 +89,15 @@ class _ProveCardState extends State<ProveCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ActionBtn(
-                  callback: () {},
+                  callback: () {
+                    
+                  },
                   color: const Color.fromARGB(255, 36, 141, 40),
                   icon: Icons.file_download_done,
                   title: "Accepter",
+                ),
+                SizedBox(
+                  width: 20,
                 ),
                 ActionBtn(
                   callback: () {},

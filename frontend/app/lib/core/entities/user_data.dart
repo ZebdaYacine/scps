@@ -1,4 +1,3 @@
-import 'package:app/core/entities/son_data.dart';
 import 'package:app/core/entities/visit_data.dart';
 
 class UserData {
@@ -31,11 +30,7 @@ class UserData {
       phone: map['phone'] ?? '',
       request: map['request'] ?? false,
       status: map['status'] ?? "",
-      link: map['link'] ?? "",
-      // sons: (map['son'] as List?)
-      //         ?.map((son) => SonData.fromJson(son as Map<String, dynamic>))
-      //         .toList() ??
-      //     [],
+      link: map['linkfile'] ?? "",
       visits: (map['visit'] as List?)
               ?.map(
                   (visit) => VisitData.fromJson(visit as Map<String, dynamic>))
@@ -52,7 +47,7 @@ class UserData {
       'phone': phone,
       "request": request,
       "status": status,
-      "link": link,
+      "linkfile": link,
       // 'son': sons.map((son) => son.toJson()).toList(),
       'visit': visits.map((visits) => visits.toJson()).toList(),
     };

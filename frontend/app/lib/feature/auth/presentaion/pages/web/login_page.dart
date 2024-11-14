@@ -75,7 +75,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Caisse National de Retraités",
+                        "Assurances Sociales des travailleurs salariés",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: context.isMobile ? 25 : 30,

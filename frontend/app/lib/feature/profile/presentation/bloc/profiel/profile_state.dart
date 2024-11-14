@@ -12,16 +12,6 @@ final class ProfileSuccess extends ProfileState {
   ProfileSuccess(this.userData);
 }
 
-final class GetDemendsSuccess extends ProfileState {
-  final List<UserData> userData;
-  GetDemendsSuccess(this.userData);
-}
-
-final class GetDemendsFailure extends ProfileState {
-  final String error;
-  GetDemendsFailure(this.error);
-}
-
 final class ProfileFailure extends ProfileState {
   final String error;
   ProfileFailure(this.error);
