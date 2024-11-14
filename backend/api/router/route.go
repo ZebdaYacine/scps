@@ -21,6 +21,7 @@ func Setup(db database.Database, gin *gin.Engine) {
 	gin.Use(cors.New(config))
 
 	publicRouter := gin.Group("/")
+	public.NewCreateAccountRouter(db, publicRouter)
 	public.NewPingRouter(db, publicRouter)
 	public.NewLoginRouter(db, publicRouter)
 	public.NewRecieveEmailRouter(db, publicRouter)

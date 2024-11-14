@@ -80,6 +80,44 @@ func verifyOTP(otp string, c *gin.Context) bool {
 	return true
 }
 
+func (ic *AuthController) CreateAccountRequest(c *gin.Context) {
+	log.Println("************************ CREATE ACCOUNT REQUEST ************************")
+	var registerParms authEntitis.Register
+	if !core.IsDataRequestSupported(&registerParms, c) {
+		return
+	}
+	log.Println(registerParms)
+	u := &feature.User{
+		Name:     registerParms.Name,
+		Email:    registerParms.Email,
+		Password: registerParms.Password,
+	}
+	authParams := &usecase.AuthParams{}
+	authParams.Data = u
+	resulat := ic.AuthUsecase.CreateAccount(c, authParams)
+	if err := resulat.Err; err != nil {
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+	u = resulat.Data.(*feature.User)
+	var htmlMsg html.HtlmlMsg
+	htmlMsg.Code = u.InsurdNbr
+	htmlMsg.Name = u.Name
+	body := html.HtmlMessage(htmlMsg)
+	err := email.SendEmail(u.Email, "Account Confirmation", body)
+	if err != nil {
+		log.Panicf(err.Error())
+		c.JSON(500, model.ErrorResponse{Message: "Can't send confirmation code"})
+		return
+	}
+	c.JSON(http.StatusOK, model.SuccessResponse{
+		Message: "CCREATE PROFILE SUCCESSFULY",
+		Data:    u,
+	})
+}
+
 // HANDLE WITH LOGIN ACCOUNT REQUEST
 func (ic *AuthController) LoginRequest(c *gin.Context) {
 	log.Println("************************ RECIEVE LOGIN REQUEST ************************")

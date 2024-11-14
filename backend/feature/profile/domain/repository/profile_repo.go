@@ -17,7 +17,6 @@ type profileRepository struct {
 }
 
 type ProfileRepository interface {
-	CreateProfile(c context.Context, user *feature.User) (*feature.User, error)
 	UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error)
 	GetProfile(c context.Context, userId string) (*feature.User, error)
 	GetInformationCard(c context.Context, userId string) (*feature.User, error)
@@ -61,24 +60,6 @@ func (s *profileRepository) ReciveDemand(c context.Context, user *feature.User) 
 	return new_user, nil
 }
 
-// CreateProfile implements ProfileRepository.
-func (s *profileRepository) CreateProfile(c context.Context, user *feature.User) (*feature.User, error) {
-	collection := s.database.Collection("user")
-	resulat, err := collection.InsertOne(c, &user)
-	if err != nil {
-		log.Printf("Failed to create user: %v", err)
-		return nil, err
-	}
-	userId := resulat.(string)
-	user.Id = userId
-	user, err = s.UpdateIdProfile(c, user)
-	if err != nil {
-		log.Printf("Failed to update survey: %v", err)
-		return nil, err
-	}
-	return user, nil
-}
-
 func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.User) (*feature.User, error) {
 	collection := s.database.Collection("user")
 	id, err := primitive.ObjectIDFromHex(user.Id)
@@ -106,7 +87,8 @@ func (s *profileRepository) UpdateIdProfile(c context.Context, user *feature.Use
 }
 
 func (r *profileRepository) GetProfile(c context.Context, userId string) (*feature.User, error) {
-	var result bson.M // MongoDB result should be a bson.M (map)
+	log.Println(userId)
+	var result bson.M
 	id, err := primitive.ObjectIDFromHex(userId)
 	if err != nil {
 		log.Fatal(err)
@@ -122,7 +104,6 @@ func (r *profileRepository) GetProfile(c context.Context, userId string) (*featu
 		InsurdNbr:  result["insurdNbr"].(string),
 		Permission: result["permission"].(string),
 		Name:       result["name"].(string),
-		Phone:      result["phone"].(string),
 		Email:      result["email"].(string),
 		Request:    result["request"].(bool),
 		Status:     result["status"].(string),
@@ -159,7 +140,6 @@ func (r *profileRepository) GetInformationCard(c context.Context, userId string)
 		InsurdNbr:  result["insurdNbr"].(string),
 		Permission: result["permission"].(string),
 		Name:       result["name"].(string),
-		Phone:      result["phone"].(string),
 		Email:      result["email"].(string),
 		// Son:        sons,
 		Visit:    convertObject(result["visit"]),

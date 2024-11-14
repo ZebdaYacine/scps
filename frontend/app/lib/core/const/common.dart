@@ -7,6 +7,7 @@ const Map<String, dynamic> headers = {
 const setemail = "/set-email";
 const setPwd = "/forget-password";
 const confirmOtp = "/confirm-otp";
+const createAccount = "/create-account";
 const profile = "/profile";
 const startPoint = "/";
 const loginP = "/login";

@@ -1,14 +1,11 @@
-import 'dart:io';
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:app/core/const/common.dart';
-import 'package:app/core/extension/extension.dart';
 import 'package:app/core/theme/app_pallete.dart';
-import 'package:app/feature/auth/presentaion/cubit/email_cubit.dart';
-import 'package:app/feature/auth/presentaion/pages/send_otp_page.dart';
-import 'package:flutter/foundation.dart';
-
+import 'package:app/feature/auth/presentaion/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app/core/extension/extension.dart';
 import 'package:app/core/state/auth/auth_bloc.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_field.dart';
@@ -16,37 +13,34 @@ import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:go_router/go_router.dart';
 
-class ResetPwdPage extends StatefulWidget {
-  const ResetPwdPage({super.key});
+class MobileCreateAccountPage extends StatefulWidget {
+  const MobileCreateAccountPage({super.key});
 
   @override
-  State<ResetPwdPage> createState() => _ResetPwdPageState();
+  State<MobileCreateAccountPage> createState() =>
+      _MobileCreateAccountPageState();
 }
 
-class _ResetPwdPageState extends State<ResetPwdPage> {
+class _MobileCreateAccountPageState extends State<MobileCreateAccountPage> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final pwdController1 = TextEditingController();
   final pwdController2 = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  Map<String, dynamic> decryptedData = {};
-  String agant = "";
 
-  @override
-  void dispose() {
-    pwdController1.dispose();
-    pwdController2.dispose();
-    super.dispose();
-  }
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    if (kIsWeb) {
-      agant = 'pharmacy';
-    } else if (Platform.isAndroid || Platform.isIOS) {
-      agant = 'insured';
-    } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      agant = 'worker';
-    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    pwdController1.dispose();
+    pwdController2.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,9 +51,9 @@ class _ResetPwdPageState extends State<ResetPwdPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SendOtpPage()),
+              MaterialPageRoute(builder: (context) => const LoginPage()),
             );
           },
         ),
@@ -75,7 +69,10 @@ class _ResetPwdPageState extends State<ResetPwdPage> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               if (state is AuthFailure) {
-                showSnackBar(context, state.error);
+                showSnackBar(
+                  context,
+                  state.error,
+                );
               } else if (state is AuthSuccess) {
                 showDialog(
                     context: context,
@@ -109,12 +106,25 @@ class _ResetPwdPageState extends State<ResetPwdPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Réinitialiser le mot de passe",
+                          "Create Votre Account",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: context.isMobile ? 25 : 30,
                           ),
                         ),
+                        const SizedBox(height: 20),
+                        AuthField(
+                          nameFiedl: "Nom",
+                          controller: nameController,
+                          isPwdField: false,
+                        ),
+                        AuthField(
+                          nameFiedl: "Email",
+                          controller: emailController,
+                          isPwdField: false,
+                        ),
+                        const SizedBox(
+                            height: 10), // Added spacing for better UI
                         AuthField(
                           nameFiedl: "Mot de passe",
                           controller: pwdController1,
@@ -125,17 +135,19 @@ class _ResetPwdPageState extends State<ResetPwdPage> {
                           controller: pwdController2,
                           isObscureText: true,
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         AuthGradientButton(
-                          buttonText: 'Valide',
+                          buttonText: 'Creer Votre Compte',
                           onClick: () {
                             if (formKey.currentState!.validate()) {
                               if (pwdController1.text == pwdController2.text) {
                                 BlocProvider.of<AuthBloc>(context).add(
-                                  AuthForgetPwd(
-                                    email:
-                                        context.read<EmailCubit>().getEmail(),
-                                    pwd1: pwdController1.text,
-                                    pwd2: pwdController1.text,
+                                  AuthRegister(
+                                    name: nameController.text,
+                                    email: emailController.text,
+                                    password: pwdController1.text,
                                   ),
                                 );
                               } else {

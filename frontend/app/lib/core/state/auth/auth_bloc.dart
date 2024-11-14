@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(AuthInitial()) {
     on<CheckStorge>(_checkStroge);
     on<Authlogin>(_onAuthLogin);
+    on<AuthRegister>(_onAuthRegister);
     on<Authlogout>(_onAuthlogout);
     on<AuthForgetPwd>(_onAuthForgetPwd);
   }
@@ -41,15 +42,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+  void _onAuthRegister(AuthRegister event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await _authUsecase.register(
+      CreateAccountParams(
+        name: event.name,
+        email: event.email,
+        password: event.password,
+      ),
+    );
+    result.fold(
+      (l) async {
+        emit(AuthFailure(l.message));
+      },
+      (r) async {
+        emit(AuthSuccess(r.token));
+      },
+    );
+  }
+
   void _onAuthLogin(Authlogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final result = await _authUsecase.login(
       UserLoginParams(
-        email: event.usernme,
+        agant: event.agant,
+        username: event.usernme,
         password: event.password,
       ),
     );
-
     result.fold(
       (l) async {
         emit(AuthFailure(l.message));

@@ -1,5 +1,6 @@
 import 'package:app/core/const/common.dart';
 import 'package:app/feature/auth/presentaion/pages/login_page.dart';
+import 'package:app/feature/auth/presentaion/pages/mobile/create_account_page.dart';
 import 'package:app/feature/auth/presentaion/pages/rest_password_page.dart';
 import 'package:app/feature/auth/presentaion/pages/send_email_page.dart';
 import 'package:app/feature/auth/presentaion/pages/send_otp_page.dart';
@@ -34,6 +35,13 @@ final GoRouter router = GoRouter(
       path: confirmOtp,
       builder: (BuildContext context, GoRouterState state) {
         return const SendOtpPage();
+      },
+    ),
+
+    GoRoute(
+      path: createAccount,
+      builder: (BuildContext context, GoRouterState state) {
+        return const MobileCreateAccountPage();
       },
     ),
 

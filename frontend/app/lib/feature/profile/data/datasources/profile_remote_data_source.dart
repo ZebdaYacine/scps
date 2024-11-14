@@ -41,7 +41,15 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         throw const ServerException('User is null!');
       }
       return UserData.fromJson(response.data["data"]);
-    } catch (e) {
+    } on DioException catch (e) {
+      int code = e.response!.statusCode!;
+      if (code >= 400 && code < 500) {
+        throw const ServerException("Token is expired!");
+      } else if (code >= 500 && code < 600) {
+        throw const ServerException('server offline or internal server error');
+      } else if (code != 200) {
+        throw const ServerException('Unexpected error');
+      }
       throw ServerException(e.toString());
     }
   }

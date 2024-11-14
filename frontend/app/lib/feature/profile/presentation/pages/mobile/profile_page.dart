@@ -189,6 +189,8 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
                         showSnackBar(context, "No data available");
                       }
                     } else if (profileState is ProfileFailure) {
+                      context.read<AuthBloc>().add(Authlogout());
+                      context.go(startPoint);
                       showSnackBar(context, profileState.error);
                     }
                   },

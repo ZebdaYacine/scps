@@ -81,25 +81,3 @@ func (ic *ProfileController) GetInformationProfileRequest(c *gin.Context) {
 		Data:    resulat.Data,
 	})
 }
-
-func (ic *ProfileController) CreateProfileRequest(c *gin.Context) {
-	log.Println("************************ CREATE PROFILE REQUEST ************************")
-	var user feature.User
-	if !core.IsDataRequestSupported(&user, c) {
-		return
-	}
-	log.Println(user)
-	profileParams := &usecase.ProfileParams{}
-	profileParams.Data = user
-	resulat := ic.ProfileUsecase.CreateProfile(c, profileParams)
-	if err := resulat.Err; err != nil {
-		c.JSON(http.StatusBadRequest, model.ErrorResponse{
-			Message: err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, model.SuccessResponse{
-		Message: "INFORMATION PROFILE SUCCESSFULY",
-		Data:    resulat,
-	})
-}

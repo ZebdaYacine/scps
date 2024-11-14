@@ -2,9 +2,8 @@
 
 import 'dart:io';
 
-import 'package:app/feature/auth/presentaion/pages/desktop/login_page.dart';
-import 'package:app/feature/auth/presentaion/pages/mobile/login_page.dart';
 import 'package:app/feature/auth/presentaion/pages/web/login_page.dart';
+import 'package:app/feature/auth/presentaion/pages/mobile/login_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: kIsWeb
-          ?  DesktopLoginPage()
+          ? WebLoginPage()
           : (Platform.isAndroid || Platform.isIOS)
               ? MobileLoginPage()
-                  : Container(),
+              : Container(),
     );
   }
 }

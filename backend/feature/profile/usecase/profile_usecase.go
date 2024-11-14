@@ -16,7 +16,6 @@ type ProfileResult struct {
 }
 
 type ProfileUsecase interface {
-	CreateProfile(c context.Context, user *ProfileParams) *ProfileResult
 	GetProfile(c context.Context, data *ProfileParams) *ProfileResult
 	GetInformationCard(c context.Context, data *ProfileParams) *ProfileResult
 	ReciveDemand(c context.Context, user *ProfileParams) *ProfileResult
@@ -28,7 +27,6 @@ type profileUsecase struct {
 }
 
 // SearchIfEamilExiste implements ProfileUsecase.
-
 func NewProfileUsecase(repo profileRepo.ProfileRepository, collection string) ProfileUsecase {
 	return &profileUsecase{
 		repo:       repo,
@@ -66,10 +64,3 @@ func (p *profileUsecase) GetInformationCard(c context.Context, data *ProfilePara
 }
 
 // CreateProfile implements ProfileUsecase.
-func (p *profileUsecase) CreateProfile(c context.Context, user *ProfileParams) *ProfileResult {
-	profileResult, err := p.repo.CreateProfile(c, user.Data.(*feature.User))
-	if err != nil {
-		return &ProfileResult{Err: err}
-	}
-	return &ProfileResult{Data: profileResult}
-}

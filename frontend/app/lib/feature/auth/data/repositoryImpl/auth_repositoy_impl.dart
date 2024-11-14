@@ -13,11 +13,31 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.remoteDataSource);
 
   @override
+  Future<Either<Failure, Auth>> register(
+      {required String name,
+      required String email,
+      required String password}) async {
+    try {
+      final user = await remoteDataSource.register(
+        name: name,
+        email: email,
+        password: password,
+      );
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
   Future<Either<Failure, Auth>> login(
-      {required String email, required String password}) async {
+      {required String agant,
+      required String email,
+      required String password}) async {
     try {
       final user = await remoteDataSource.login(
-        email: email,
+        agant: agant,
+        username: email,
         password: password,
       );
       return right(user);

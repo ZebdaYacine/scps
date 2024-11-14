@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
+	"scps-backend/feature"
 	"scps-backend/feature/auth/domain/entities"
 	"scps-backend/feature/auth/domain/repository"
 )
@@ -21,7 +22,7 @@ func (l *AuthParams) validator() error {
 	switch l.Data.(type) {
 	case *entities.Login:
 		params := l.Data.(*entities.Login)
-		if params.Email == "" {
+		if params.UserName == "" {
 			return fmt.Errorf("email cannot be empty")
 		}
 		if params.Password == "" {
@@ -53,6 +54,7 @@ type AuthUsecase interface {
 	Login(c context.Context, data *AuthParams) *AuthResult
 	SetPassword(c context.Context, data *AuthParams) *AuthResult
 	SearchIfEamilExiste(c context.Context, data *AuthParams) *AuthResult
+	CreateAccount(c context.Context, user *AuthParams) *AuthResult
 }
 
 type authUsecase struct {
@@ -94,6 +96,14 @@ func (u *authUsecase) SetPassword(c context.Context, data *AuthParams) *AuthResu
 func (p *authUsecase) SearchIfEamilExiste(c context.Context, email *AuthParams) *AuthResult {
 	data := email.Data.(*entities.SetEmail)
 	profileResult, err := p.repo.SearchIfEamilExiste(c, data.Email)
+	if err != nil {
+		return &AuthResult{Err: err}
+	}
+	return &AuthResult{Data: profileResult}
+}
+
+func (p *authUsecase) CreateAccount(c context.Context, user *AuthParams) *AuthResult {
+	profileResult, err := p.repo.CreateAccount(c, user.Data.(*feature.User))
 	if err != nil {
 		return &AuthResult{Err: err}
 	}

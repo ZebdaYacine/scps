@@ -74,6 +74,8 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                 if (profileState is ProfileSuccess) {
                   userData = profileState.userData;
                 } else if (profileState is ProfileFailure) {
+                  context.read<AuthBloc>().add(Authlogout());
+                  context.go(startPoint);
                   showSnackBar(context, profileState.error);
                 }
               },
@@ -105,7 +107,7 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                               request: false,
                               status: "rejected",
                               link:
-                                  "files//data/user/0/com.example.app/cache/file_picker/1731489505732/Screenshot_2024-11-13-07-48-38-02_40deb401b9ffe8e1df2f1cc5ba480b12.jpg",
+                                  "files//data/user/0/com.example.app/cache/file_picker/1731531069014/Screenshot_20241113-100221.png",
                               visits: [],
                             ),
                             UserData(

@@ -10,9 +10,18 @@ class AuthUsecase {
     required this.authRepository,
   });
 
+  Future<Either<Failure, Auth>> register(CreateAccountParams params) async {
+    return await authRepository.register(
+      name: params.name,
+      email: params.email,
+      password: params.password,
+    );
+  }
+
   Future<Either<Failure, Auth>> login(UserLoginParams params) async {
     return await authRepository.login(
-      email: params.email,
+      agant: params.agant,
+      email: params.username,
       password: params.password,
     );
   }
@@ -56,10 +65,24 @@ class ForgetPasswordarams {
 }
 
 class UserLoginParams {
-  final String email;
+  final String agant;
+  final String username;
   final String password;
 
   UserLoginParams({
+    required this.agant,
+    required this.username,
+    required this.password,
+  });
+}
+
+class CreateAccountParams {
+  final String name;
+  final String email;
+  final String password;
+
+  CreateAccountParams({
+    required this.name,
     required this.email,
     required this.password,
   });

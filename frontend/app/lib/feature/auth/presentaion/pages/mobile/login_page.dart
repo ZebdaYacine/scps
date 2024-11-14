@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:app/core/const/common.dart';
-import 'package:app/core/widgets/alert.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +70,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                         backgroundImage: AssetImage(
                           'assets/cnas.png',
                         ),
-                        radius: context.responsiveHeight(18),
+                        radius: context.responsiveHeight(16),
                         backgroundColor: Colors.transparent,
                       ),
                       const SizedBox(height: 10),
@@ -79,12 +78,12 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                         "Caisse National de Retraités",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: context.isMobile ? 25 : 30,
+                          fontSize: context.isMobile ? 23 : 30,
                         ),
                       ),
                       const SizedBox(height: 20),
                       AuthField(
-                        nameFiedl: "Email",
+                        nameFiedl: "N'de securite Social",
                         controller: usernameController,
                         isPwdField: false,
                       ),
@@ -101,6 +100,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                           if (formKey.currentState!.validate()) {
                             BlocProvider.of<AuthBloc>(context).add(
                               Authlogin(
+                                agant: "USER",
                                 usernme: usernameController.text,
                                 password: passwordController.text,
                               ),
@@ -135,7 +135,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  showCustomAlertDialog(context);
+                                  context.go(createAccount);
                                 },
                             ),
                           ],

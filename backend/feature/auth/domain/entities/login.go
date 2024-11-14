@@ -1,7 +1,14 @@
 package entities
 
-type Login struct {
+type Register struct {
+	Name     string `json:"name"`
 	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type Login struct {
+	Agant    string `json:"agant"`
+	UserName string `json:"username"`
 	Password string `json:"password"`
 }
 

@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:app/core/const/common.dart';
-import 'package:app/core/widgets/alert.dart';
 import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -69,14 +68,14 @@ class _WebLoginPageState extends State<WebLoginPage> {
                     children: [
                       CircleAvatar(
                         backgroundImage: AssetImage(
-                          'assets/pharmacie.png',
+                          'assets/cnas.png',
                         ),
                         radius: context.responsiveHeight(18),
                         backgroundColor: Colors.transparent,
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Portail national des pharmaciens Algérie',
+                        "Caisse National de Retraités",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: context.isMobile ? 25 : 30,
@@ -101,6 +100,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
                           if (formKey.currentState!.validate()) {
                             BlocProvider.of<AuthBloc>(context).add(
                               Authlogin(
+                                agant: "SUPER-USER",
                                 usernme: usernameController.text,
                                 password: passwordController.text,
                               ),
@@ -123,19 +123,6 @@ class _WebLoginPageState extends State<WebLoginPage> {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   context.go(setemail);
-                                },
-                            ),
-                            const TextSpan(text: " & "),
-                            TextSpan(
-                              text: "I don't have an account",
-                              style: const TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  showCustomAlertDialog(context);
                                 },
                             ),
                           ],
