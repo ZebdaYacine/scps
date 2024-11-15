@@ -18,7 +18,7 @@ COPY .env ./
 
 # WORKDIR /app
 
-EXPOSE 4000
+EXPOSE 3000
 #RUN go run cmd/main.go
 #ENTRYPOINT [ "/app/main" ]
 CMD ["go","run","cmd/main.go"]

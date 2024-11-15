@@ -31,7 +31,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<AuthBloc>(context).add(CheckStorge());
+      //BlocProvider.of<AuthBloc>(context).add(CheckStorge());
     });
   }
 
