@@ -59,4 +59,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> updateDemand(
+      {required String token, required UserData user}) async {
+    try {
+      final users =
+          await remoteDataSource.updateDemand(token: token, user: user);
+      if (users.insurdNbr == "") {
+        return right(false);
+      } else {
+        return right(true);
+      }
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

@@ -97,15 +97,14 @@ func (s *profileRepository) GetAllDemand(c context.Context) ([]*feature.User, er
 
 func (s *profileRepository) UpdateDemand(c context.Context, user *feature.User) (*feature.User, error) {
 	collection := s.database.Collection("user")
-	id, err := primitive.ObjectIDFromHex(user.Id)
-	if err != nil {
-		log.Fatal(err)
-	}
-	filterUpdate := bson.D{{Key: "_id", Value: id}}
+	filterUpdate := bson.D{{Key: "insurdNbr", Value: user.InsurdNbr}}
 	update := bson.M{
-		"$set": user,
+		"$set": bson.M{
+			"request": user.Request,
+			"status":  user.Status,
+		},
 	}
-	_, err = collection.UpdateOne(c, filterUpdate, update)
+	_, err := collection.UpdateOne(c, filterUpdate, update)
 	if err != nil {
 		log.Panic(err)
 		return nil, err
@@ -135,7 +134,6 @@ func (r *profileRepository) GetProfile(c context.Context, userId string) (*featu
 		return nil, err
 	}
 	user := feature.User{
-		// InsurdNbr:  result["insurdNbr"].(string),
 		Permission: result["permission"].(string),
 		Name:       result["name"].(string),
 		Email:      result["email"].(string),
@@ -165,16 +163,6 @@ func (r *profileRepository) GetInformationCard(c context.Context, userId string)
 		return nil, err
 	}
 
-	// var sons []feature.Son
-	// for _, sonItem := range result["son"].(bson.A) {
-	// 	sonMap := sonItem.(primitive.M)
-	// 	sons = append(sons, feature.Son{
-	// 		Name:      sonMap["name"].(string),
-	// 		InsurdNbr: sonMap["insurdNbr"].(string),
-	// 		Status:    sonMap["status"].(string),
-	// 		Visit:     convertObject(result["visit"].(primitive.A)),
-	// 	})
-	// }
 	user := feature.User{
 		InsurdNbr:  result["insurdNbr"].(string),
 		Permission: result["permission"].(string),
@@ -192,11 +180,9 @@ func convertObject(data interface{}) []feature.Visit {
 	for _, visitItem := range data.(bson.A) {
 		visitMap := visitItem.(primitive.M)
 
-		// Safely convert nbr and trimester to int if they are int32 or int64
 		nbr := visitMap["nbr"]
 		trimester := visitMap["trimester"]
 
-		// Handle type assertions for nbr and trimester to int
 		var visitNbr int
 		var visitTrimester int
 
@@ -206,7 +192,7 @@ func convertObject(data interface{}) []feature.Visit {
 		case int64:
 			visitNbr = int(v)
 		default:
-			visitNbr = nbr.(int) // fall back to int
+			visitNbr = nbr.(int)
 		}
 
 		switch v := trimester.(type) {

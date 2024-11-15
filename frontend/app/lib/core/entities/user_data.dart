@@ -5,8 +5,8 @@ class UserData {
   final String name;
   final String email;
   final String phone;
-  final bool request;
-  final String status;
+  late final bool request;
+  late final String status;
   final String link;
   // final List<SonData> sons;
   final List<VisitData> visits;

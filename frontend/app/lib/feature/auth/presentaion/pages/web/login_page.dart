@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:app/core/const/common.dart';
-import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
+import 'package:app/core/state/auth/cubit/token_cubit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/core/extension/extension.dart';
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
@@ -50,7 +50,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
             if (state is AuthFailure) {
               showSnackBar(context, state.error);
             } else if (state is AuthSuccess) {
-              context.read<TokenCubit>().setToken(state.token);
+              // context.read<TokenCubit>().setToken(state.token);
               context.go(profile);
             }
           },

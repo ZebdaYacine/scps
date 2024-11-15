@@ -21,6 +21,11 @@ abstract interface class ProfileRemoteDataSource {
     required String token,
   });
 
+  Future<UserData> updateDemand({
+    required String token,
+    required UserData user,
+  });
+
   Future<UserData> getInformationCard({
     required String token,
     required String idsecurity,
@@ -34,7 +39,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       {required String token, required String agant}) async {
     try {
       final response = await Dio().get(
-        "${Secret.URL_API}/${agant}/get-profile",
+        "${Secret.URL_API}/$agant/get-profile",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -136,13 +141,49 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
           },
         ),
       );
-      if (response.data == null) {
-        throw const ServerException('User is null!');
+      if (response.data["data"] == null) {
+        throw const ServerException('il ya aucun demands');
       }
       List<dynamic> dataList = response.data["data"];
       List<UserData> users =
           dataList.map((data) => UserData.fromJson(data)).toList();
       return users;
+    } on DioException catch (e) {
+      int code = e.response!.statusCode!;
+      if (code == 401) {
+        throw const ServerException("Token Unauthorized");
+      }
+      if (code >= 500 && code < 600) {
+        throw const ServerException('server offline or internal server error');
+      } else if (code != 200) {
+        throw const ServerException('Unexpected error');
+      }
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<UserData> updateDemand(
+      {required String token, required UserData user}) async {
+    try {
+      logger.d(user.toJson());
+      final response = await Dio().post(
+        "${Secret.URL_API}/super-user/update-demand",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+        data: {
+          "insurdNbr": user.insurdNbr,
+          "request": user.request,
+          "status": user.status,
+        },
+      );
+      if (response.data["data"] == null) {
+        throw const ServerException('User is null!');
+      }
+      return UserData.fromJson(response.data["data"]);
     } on DioException catch (e) {
       int code = e.response!.statusCode!;
       if (code == 401) {

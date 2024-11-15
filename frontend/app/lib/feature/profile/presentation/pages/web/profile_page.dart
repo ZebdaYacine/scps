@@ -3,16 +3,17 @@
 import 'dart:io';
 
 import 'package:app/core/const/common.dart';
+import 'package:app/core/const/secure_storge.dart';
 import 'package:app/core/entities/user_data.dart';
 import 'package:app/core/extension/extension.dart';
 import 'package:app/core/secret/sercret.dart';
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/core/utils/security.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:app/feature/profile/presentation/bloc/demand/demand_bloc_bloc.dart';
 import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
-import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
+import 'package:app/core/state/auth/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/widgets/damand_list.dart';
 import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
 import 'package:app/feature/profile/presentation/widgets/user.dart';
@@ -106,21 +107,36 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                         BlocConsumer<DemandBloc, DemandState>(
                           listener: (context, state) {
                             if (state is GetDemendsFailure) {
+                              setState(() {
+                                demands = [];
+                              });
                               showSnackBar(context, state.error);
                             }
                             if (state is GetDemendsSuccess) {
-                              demands = state.userData;
+                              setState(() {
+                                demands = state.userData;
+                              });
                             }
                           },
                           builder: (context, state) {
-                            if (state is ProfileLoading) {
+                            if (state is DemandLoading) {
                               return const Loader();
                             }
                             if (demands.isEmpty) {
                               return SizedBox(
                                 height: 100,
                                 child: Center(
-                                    child: IconButton(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "La List de demands est  Vide",
+                                        style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: context.isMobile ? 23 : 30,
+                                        ),
+                                      ),
+                                      IconButton(
                                         onPressed: () {
                                           context.read<DemandBloc>().add(
                                                 GetAllPendingDemandsEvent(
@@ -128,11 +144,18 @@ class _ProfileWebPageState extends State<ProfileWebPage> {
                                                 ),
                                               );
                                         },
-                                        icon:
-                                            const Icon(Icons.refresh_rounded))),
+                                        icon: const Icon(
+                                          size: 30,
+                                          Icons.refresh_rounded,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
+                            } else {
+                              return DemandList(demands: demands);
                             }
-                            return DemandList(demands: demands);
                           },
                         )
                       ],

@@ -6,7 +6,7 @@ import 'package:app/feature/auth/presentaion/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/core/extension/extension.dart';
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';

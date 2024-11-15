@@ -16,3 +16,13 @@ final class GetDemendsFailure extends DemandState {
   final String error;
   GetDemendsFailure(this.error);
 }
+
+final class UpdateDemendsSuccess extends DemandState {
+  final bool status;
+  UpdateDemendsSuccess(this.status);
+}
+
+final class UpdateDemendsFailure extends DemandState {
+  final String error;
+  UpdateDemendsFailure(this.error);
+}

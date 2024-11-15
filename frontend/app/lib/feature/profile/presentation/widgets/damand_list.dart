@@ -92,7 +92,7 @@ class _DemandListState extends State<DemandList> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        "La list of les demandes",
+                        "La list des demandes",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -170,7 +170,7 @@ class _DemandListState extends State<DemandList> {
                               context: context,
                               builder: (context) {
                                 return ProveCard(
-                                  Link: demand.link,
+                                  user: demand,
                                 );
                               },
                             );

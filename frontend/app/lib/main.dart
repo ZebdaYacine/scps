@@ -1,5 +1,5 @@
 import 'package:app/core/router/routing.dart';
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/core/state/email/set_email_bloc.dart';
 import 'package:app/core/theme/theme.dart';
 import 'package:app/feature/auth/data/datasources/auth_remote_data_source.dart';
@@ -11,8 +11,8 @@ import 'package:app/feature/profile/data/repositoryImpl/profile_repositoy_impl.d
 import 'package:app/feature/profile/domain/usecase/profile_usecase.dart';
 import 'package:app/feature/profile/presentation/bloc/demand/demand_bloc_bloc.dart';
 import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
-import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
-import 'package:app/feature/profile/presentation/cubit/used_cubit.dart';
+import 'package:app/feature/profile/presentation/cubit/state_request_cubit.dart';
+import 'package:app/core/state/auth/cubit/token_cubit.dart';
 import 'package:app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,6 @@ void main() async {
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
-
   @override
   State<MainApp> createState() => _MainAppState();
 }
@@ -44,6 +43,9 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(
           create: (context) => EmailCubit(),
         ),
+        // BlocProvider(
+        //   create: (context) => StateRequestCubit(),
+        // ),
         BlocProvider(
           create: (context) => TokenCubit(),
         ),

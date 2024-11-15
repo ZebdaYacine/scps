@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"scps-backend/feature"
+	profileE "scps-backend/feature/profile/domain/entities"
 	profileRepo "scps-backend/feature/profile/domain/repository"
 )
 
@@ -58,7 +59,12 @@ func (p *profileUsecase) ReciveDemand(c context.Context, data *ProfileParams) *P
 }
 
 func (p *profileUsecase) UpdateDemand(c context.Context, data *ProfileParams) *ProfileResult {
-	profileResult, err := p.repo.UpdateDemand(c, data.Data.(*feature.User))
+	d := data.Data.(profileE.UpdateProfile)
+	userData := &feature.User{}
+	userData.Status = d.Status
+	userData.InsurdNbr = d.InsurdNbr
+	userData.Request = d.Request
+	profileResult, err := p.repo.UpdateDemand(c, userData)
 	if err != nil {
 		return &ProfileResult{Err: err}
 	}

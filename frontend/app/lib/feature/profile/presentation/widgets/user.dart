@@ -1,4 +1,4 @@
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/feature/profile/presentation/widgets/information_card.dart';
 import 'package:flutter/material.dart';

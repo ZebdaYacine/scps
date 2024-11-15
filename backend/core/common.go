@@ -21,6 +21,7 @@ var RootServer = pkg.GET_ROOT_SERVER_SEETING()
 
 func IsDataRequestSupported[T feature.Account](data *T, c *gin.Context) bool {
 	err := c.ShouldBindJSON(data)
+	log.Println(err)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, model.ErrorResponse{Message: "Data sent not supported the api format "})
 		return false

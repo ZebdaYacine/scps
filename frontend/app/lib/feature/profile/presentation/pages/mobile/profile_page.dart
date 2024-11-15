@@ -6,13 +6,13 @@ import 'package:app/core/const/common.dart';
 import 'package:app/core/entities/user_data.dart';
 import 'package:app/core/extension/extension.dart';
 import 'package:app/core/secret/sercret.dart';
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/core/utils/security.dart';
 import 'package:app/core/utils/snack_bar.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:app/feature/profile/presentation/bloc/profiel/profile_bloc.dart';
-import 'package:app/feature/profile/presentation/cubit/token_cubit.dart';
+import 'package:app/core/state/auth/cubit/token_cubit.dart';
 import 'package:app/feature/profile/presentation/widgets/alert_card.dart';
 import 'package:app/feature/profile/presentation/widgets/nav_bar.dart';
 import 'package:app/feature/profile/presentation/widgets/upload_button_file.dart';
@@ -114,15 +114,31 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
     }
   }
 
-  void selectFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowedExtensions: ['jpg', 'png'],
-      type: FileType.custom,
-      compressionQuality: 100,
-    );
-    setState(() {
-      pickedFile = result!.files.first;
-    });
+  void selectFile(BuildContext context) async {
+    try {
+      // Pick a file with allowed extensions and custom file type
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowedExtensions: ['jpg', 'png'],
+        type: FileType.custom,
+        compressionQuality: 100,
+      );
+      if (result != null && result.files.isNotEmpty) {
+        final pickedFile = result.files.first;
+
+        if (pickedFile.extension == 'jpg' || pickedFile.extension == 'png') {
+          setState(() {
+            this.pickedFile = pickedFile;
+          });
+        } else {
+          showSnackBar(context, "Le fichier doit être au format PNG ou JPG");
+        }
+      } else {
+        showSnackBar(context, "Aucun fichier sélectionné");
+      }
+    } catch (e) {
+      showSnackBar(
+          context, "Une erreur est survenue lors de la sélection du fichier");
+    }
   }
 
   @override
@@ -228,7 +244,7 @@ class _ProfileMobilePageState extends State<ProfileMobilePage> {
                           if (showUploadFile)
                             SelectButton(
                               callback: () async {
-                                selectFile();
+                                selectFile(context);
                               },
                             ),
                           const SizedBox(height: 10),

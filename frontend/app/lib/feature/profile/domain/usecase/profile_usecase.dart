@@ -17,6 +17,13 @@ class ProfileUsecase {
     );
   }
 
+  Future<Either<Failure, bool>> updateDemand(UpdateDemandParams params) async {
+    return await profileRepository.updateDemand(
+      token: params.token,
+      user: params.userData,
+    );
+  }
+
   Future<Either<Failure, UserData>> getInformationsCard(
       InformationCardParams params) async {
     return await profileRepository.getInformationsCard(
@@ -38,6 +45,16 @@ class ProfileUsecase {
       token: params.token,
     );
   }
+}
+
+class UpdateDemandParams {
+  final String token;
+  final UserData userData;
+
+  UpdateDemandParams({
+    required this.token,
+    required this.userData,
+  });
 }
 
 class GetDemandParams {

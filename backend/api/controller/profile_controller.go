@@ -103,6 +103,7 @@ func (ic *ProfileController) UpdateDemandRequestt(c *gin.Context) {
 	if !core.IsDataRequestSupported(&updateProfile, c) {
 		return
 	}
+	log.Println("**************", updateProfile)
 	profileParams := &usecase.ProfileParams{}
 	profileParams.Data = updateProfile
 	resulat := ic.ProfileUsecase.UpdateDemand(c, profileParams)

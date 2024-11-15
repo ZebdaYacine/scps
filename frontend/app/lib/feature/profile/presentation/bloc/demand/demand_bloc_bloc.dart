@@ -12,6 +12,7 @@ class DemandBloc extends Bloc<DemandBlocEvent, DemandState> {
       : _profileUsecase = profileUsecase,
         super(DemandInitial()) {
     on<GetAllPendingDemandsEvent>(_getDemandsEvent);
+    on<UpdateDemandsEvent>(_updateDemandsEvent);
   }
   void _getDemandsEvent(
       GetAllPendingDemandsEvent event, Emitter<DemandState> emit) async {
@@ -22,6 +23,37 @@ class DemandBloc extends Bloc<DemandBlocEvent, DemandState> {
       ),
     );
     result.fold(
+      (l) async {
+        emit(GetDemendsFailure(l.message));
+      },
+      (r) async {
+        emit(GetDemendsSuccess(r));
+      },
+    );
+  }
+
+  void _updateDemandsEvent(
+      UpdateDemandsEvent event, Emitter<DemandState> emit) async {
+    emit(DemandLoading());
+    final result = await _profileUsecase.updateDemand(
+      UpdateDemandParams(token: event.token, userData: event.user),
+    );
+    result.fold(
+      (l) async {
+        emit(UpdateDemendsFailure(l.message));
+      },
+      (r) async {
+        emit(UpdateDemendsSuccess(r));
+      },
+    );
+
+    emit(DemandLoading());
+    final result1 = await _profileUsecase.getAllDemands(
+      GetDemandParams(
+        token: event.token,
+      ),
+    );
+    result1.fold(
       (l) async {
         emit(GetDemendsFailure(l.message));
       },

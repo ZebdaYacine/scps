@@ -8,6 +8,11 @@ abstract interface class ProfileRepository {
     required String agant,
   });
 
+  Future<Either<Failure, bool>> updateDemand({
+    required String token,
+    required UserData user,
+  });
+
   Future<Either<Failure, UserData>> getInformationsCard({
     required String token,
     required String idsecurity,

@@ -1,7 +1,7 @@
 import 'package:app/core/const/common.dart';
 import 'package:app/core/errors/exception.dart';
 import 'package:app/core/secret/sercret.dart';
-import 'package:app/core/state/auth/auth_bloc.dart';
+import 'package:app/core/state/auth/bloc/auth_bloc.dart';
 import 'package:app/feature/auth/data/models/auth_model.dart';
 import 'package:dio/dio.dart';
 
@@ -76,6 +76,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
+      logger.d(
+        {
+          'agant': agant,
+          'username': username,
+          'password': password,
+        },
+      );
       final response = await Dio().post(
         "${Secret.URL_API}$loginP",
         options: Options(headers: headers),
