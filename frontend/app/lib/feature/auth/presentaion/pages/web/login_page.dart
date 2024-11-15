@@ -70,15 +70,16 @@ class _WebLoginPageState extends State<WebLoginPage> {
                         backgroundImage: AssetImage(
                           'assets/cnas.png',
                         ),
-                        radius: context.responsiveHeight(18),
+                        radius: context.responsiveHeight(20),
                         backgroundColor: Colors.transparent,
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Assurances Sociales des travailleurs salariés",
+                        "AGENCE CNAS ",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: context.isMobile ? 25 : 30,
+                          fontSize: context.isMobile ? 25 : 35,
                         ),
                       ),
                       const SizedBox(height: 20),

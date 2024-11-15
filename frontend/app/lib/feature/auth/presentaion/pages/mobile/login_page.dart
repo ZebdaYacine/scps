@@ -2,6 +2,7 @@
 
 import 'package:app/core/const/common.dart';
 import 'package:app/core/state/auth/cubit/token_cubit.dart';
+import 'package:app/core/theme/app_pallete.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:app/core/widgets/auth_field.dart';
 import 'package:app/core/widgets/auth_gradient_button.dart';
 import 'package:app/core/widgets/loading_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MobileLoginPage extends StatefulWidget {
   const MobileLoginPage({super.key});
@@ -68,17 +70,19 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                     children: [
                       CircleAvatar(
                         backgroundImage: AssetImage(
-                          'assets/cnas.png',
+                          'assets/qrcode.png',
                         ),
-                        radius: context.responsiveHeight(16),
+                        radius: context.responsiveHeight(18),
                         backgroundColor: Colors.transparent,
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Platfrom E-CHIFFA",
-                        style: TextStyle(
+                        "PLATFROM E-CHIFFA",
+                        style: GoogleFonts.firaSans(
                           fontWeight: FontWeight.bold,
-                          fontSize: context.isMobile ? 23 : 30,
+                          fontStyle:
+                              FontStyle.italic, // Set the fontStyle to italic
+                          fontSize: context.isMobile ? 30 : 30,
                         ),
                       ),
                       const SizedBox(height: 20),
