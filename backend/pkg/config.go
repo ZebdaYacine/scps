@@ -39,9 +39,13 @@ type SMTP_SERVER struct {
 
 func GET_ROOT_SERVER_SEETING() ROOT_SERVER {
 	LoadEnv()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
 	return ROOT_SERVER{
 		SERVER_ADDRESS: os.Getenv("SERVER_ADDRESS"),
-		SERVER_PORT:    os.Getenv("SERVER_PORT"),
+		SERVER_PORT:    port,
 		SECRET_KEY:     os.Getenv("SECRET_KEY"),
 	}
 }
