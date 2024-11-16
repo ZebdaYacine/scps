@@ -98,7 +98,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
                       ),
                       const SizedBox(height: 15), // Added spacing for better UI
                       AuthGradientButton(
-                        buttonText: 'Login',
+                        buttonText: 'Connecte',
                         onClick: () {
                           if (formKey.currentState!.validate()) {
                             BlocProvider.of<AuthBloc>(context).add(
@@ -117,7 +117,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
                           style: TextStyle(fontSize: 18, color: Colors.black),
                           children: [
                             TextSpan(
-                              text: 'Forget my password',
+                              text: 'Oublier le mot de pass',
                               style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

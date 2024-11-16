@@ -58,7 +58,7 @@ class _MobileCreateAccountPageState extends State<MobileCreateAccountPage> {
           },
         ),
         title: const Text(
-          'E-CHIFFA',
+          'E-CHIFA',
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
@@ -79,14 +79,14 @@ class _MobileCreateAccountPageState extends State<MobileCreateAccountPage> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text('Alert'),
-                        content: const Text(
-                            'Your password has been set successfully'),
+                        content:
+                            const Text('Votre compte a été créé avec succès'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               context.go(startPoint);
                             },
-                            child: const Text('go to login page'),
+                            child: const Text('aller à la page de connexion'),
                           ),
                         ],
                       );
@@ -106,7 +106,7 @@ class _MobileCreateAccountPageState extends State<MobileCreateAccountPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Create Votre Account",
+                          "Creer Votre compte",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: context.isMobile ? 25 : 30,
@@ -151,8 +151,8 @@ class _MobileCreateAccountPageState extends State<MobileCreateAccountPage> {
                                   ),
                                 );
                               } else {
-                                showSnackBar(
-                                    context, "passwords are not the same");
+                                showSnackBar(context,
+                                    "les mots de passe ne sont pas les mêmes");
                               }
                             }
                           },

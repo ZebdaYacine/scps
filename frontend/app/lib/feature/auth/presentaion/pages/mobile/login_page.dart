@@ -79,7 +79,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "PLATFROM E-CHIFFA",
+                        "PLATFROM E-CHIFA",
                         style: GoogleFonts.firaSans(
                           fontWeight: FontWeight.bold,
                           fontStyle:
@@ -101,7 +101,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       ),
                       const SizedBox(height: 15), // Added spacing for better UI
                       AuthGradientButton(
-                        buttonText: 'Login',
+                        buttonText: 'Connecte',
                         onClick: () {
                           if (formKey.currentState!.validate()) {
                             BlocProvider.of<AuthBloc>(context).add(
@@ -120,7 +120,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                           style: TextStyle(fontSize: 18, color: Colors.black),
                           children: [
                             TextSpan(
-                              text: 'Forget my password',
+                              text: 'Oublier le mot de pass',
                               style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                             ),
                             const TextSpan(text: " & "),
                             TextSpan(
-                              text: "I don't have an account",
+                              text: "Je n'ai pas de compte",
                               style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
