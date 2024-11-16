@@ -48,7 +48,9 @@ class _WebLoginPageState extends State<WebLoginPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              showSnackBar(context, state.error);
+              if (state.error != "Token is empty") {
+                showSnackBar(context, state.error);
+              }
             } else if (state is AuthSuccess) {
               // context.read<TokenCubit>().setToken(state.token);
               context.go(profile);

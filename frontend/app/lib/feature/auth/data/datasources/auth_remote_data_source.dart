@@ -76,16 +76,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      logger.d(
-        {
-          'agant': agant,
-          'username': username,
-          'password': password,
-        },
-      );
+      logger.d(Secret.URL_API);
       final response = await Dio().post(
         "${Secret.URL_API}$loginP",
-        options: Options(headers: headers),
+        options: Options(
+          headers: headers,
+        ),
         data: {
           'agant': agant,
           'username': username,
