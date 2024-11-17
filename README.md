@@ -10,17 +10,18 @@
 
 <h1>Back-end</h1>
 </b>
-<h4>-run api in your local machine:</h4>
-<br>
+<h4>- Run API on your local machine:</h4>
 <ul>
     <li>$ cd backend</li>
     <li>$ docker build -t app</li>
     <li>$ docker-compose up -d</li>
     <li>$ docker run app</li>
 </ul>
-<h4>-api via remote server:</h4>
-<br>
-<p>BASE URL OF API :<br>https://scps.onrender.com{ name of the servcie}</p>
+
+<h4>- API via remote server:</h4>
+<ul>
+    <li>BASE URL OF API: <a href="https://scps.onrender.com" target="_blank">https://scps.onrender.com/{name of the service}</a></li>
+</ul>
 
 <h1>Front-end</h1>
 <ul>
