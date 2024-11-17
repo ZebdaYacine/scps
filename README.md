@@ -8,7 +8,7 @@
 
 # E-chiFFa
 
-<h1>Backedn</h1>
+<h1>Back-end</h1>
 </b>
 <h4>-run api in your local machine:</h4>
 <br>
