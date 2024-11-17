@@ -7,6 +7,9 @@
 
 
 # E-chiFFa
+<p>
+E-Chifa permet de simplifier et d'automatiser la demande de carte virtuelle pour les assurés sociaux. En intégrant des fonctionnalités sécurisées et rapides, elle vise à faciliter l'accès aux services de santé dématérialisés. Grâce à cette solution, les utilisateurs peuvent soumettre et suivre leurs demandes directement en ligne, améliorant ainsi l'efficacité et l'expérience utilisateur.EndFragment
+</p>
 
 <h1>Back-end</h1>
 </b>
