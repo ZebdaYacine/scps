@@ -7,40 +7,46 @@
 
 
 # E-chiFFa
-for run the appliction localy
+
 <h1>Backedn</h1>
 </b>
-$ cd backend <br>
-$ docker build -t app <br>
-$ docker-compose up -d <br>
-$ docker run  app <br>
-the base URL is <br>
-
+<h4>-run api in your local machine:</h4>
+<br>
+<ul>
+    <li>$ cd backend</li>
+    <li>$ docker build -t app</li>
+    <li>$ docker-compose up -d</li>
+    <li>$ docker run app</li>
+</ul>
+<h4>-api via remote server:</h4>
+<br>
 <p>BASE URL OF API :<br>https://scps.onrender.com{ name of the servcie}</p>
 
 <h1>Front-end</h1>
-$ download flutter &sdk <br>
-$ cd frontend/app <br>
-$ fluuter pub get <br>
-$ fluuter run <br>
+<ul>
+    <li>$ download flutter & SDK</li>
+    <li>$ cd frontend/app</li>
+    <li>$ flutter pub get</li>
+    <li>$ flutter run</li>
+</ul>
+
 
 </b>
-<h1>Screans:</h1>
-<h4>
-web site:
-</h4>
-<br>
-<p align="center">
-  <img src="web.png" width="700" title="hover text">
-</p>
-
-<h4>
-mobile application:
-</h4>
-<br>
-<p align="center">
-  <img src="mobile.jpg" width="350" title="hover text">
-</p>
+<h1>Screens:</h1>
+<ul>
+    <li>
+        <h4>Website:</h4>
+        <p align="center">
+            <img src="web.png" width="700" alt="Web Application Preview">
+        </p>
+    </li>
+    <li>
+        <h4>Mobile Application:</h4>
+        <p align="center">
+            <img src="mobile.jpg" width="350" alt="Mobile Application Preview">
+        </p>
+    </li>
+</ul>
 
 </body>
 </html>
